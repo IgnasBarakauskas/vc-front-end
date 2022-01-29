@@ -9,11 +9,11 @@
 .container--right {
     right: 0px;
 }
-.container[data-fullWidth="false"] {
+.container[data-fullwidth="false"] {
     transition: width 2s;
     width: 0%;
 }
-.container[data-fullWidth="true"] {
+.container[data-fullwidth="true"] {
     transition: width 2s;
     width: 65%;
 }
