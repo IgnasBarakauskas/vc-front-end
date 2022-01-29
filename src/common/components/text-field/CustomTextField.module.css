@@ -1,8 +1,11 @@
 .textField--fullWidth {
     width: 100%;
 }
+.textField div {
+    background-color: var(--color-light-green) !important;
+}
 .textField input {
-    background-color: var(--color-light-green);
+    background-color: var(--color-light-green) !important;
 }
 .textField * {
     border-radius: 50px !important;
