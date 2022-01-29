@@ -1,0 +1,65 @@
+.container {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+.selector {
+    background-image: url("../../common/images/backGround.jpg");
+    background-size: cover;
+    height: 100%;
+    width: 35%;
+    position: relative;
+    z-index: 10;
+}
+.selector[data-login="true"] {
+    animation-name: toLoginSelector;
+    animation-duration: 2s;
+    left: calc(100% - 35%);
+}
+.selector[data-login="false"] {
+    animation-name: toRegisterSelector;
+    animation-duration: 2s;
+    left: 0px;
+}
+.mainText {
+    max-width: 100%;
+    margin-top: 200px;
+    padding: 0 16px;
+    font-size: 42px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--color-white);
+}
+.secondaryText {
+    max-width: 100%;
+    margin-top: 32px;
+    font-size: 24px;
+    padding: 0 32px;
+    text-align: center;
+    color: var(--color-white);
+}
+.buttonContainer {
+    display: flex;
+    margin-top: 32px !important;
+    width: 100%;
+    justify-content: center;
+}
+.button {
+    padding: 6px 60px !important;
+}
+@keyframes toLoginSelector {
+    from {
+        left: 0px;
+    }
+    to {
+        left: calc(100% - 35%);
+    }
+}
+@keyframes toRegisterSelector {
+    from {
+        left: calc(100% - 35%);
+    }
+    to {
+        left: 0px;
+    }
+}

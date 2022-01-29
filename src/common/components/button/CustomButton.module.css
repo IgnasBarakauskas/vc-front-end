@@ -1,0 +1,29 @@
+.button {
+    background-color: var(--color-white) !important;
+    color: var(--color-black) !important;
+    border-radius: 50px !important;
+    height: 32px !important;
+    padding: 6px 32px !important;
+    text-transform: none !important;
+}
+.button[data-color="primary"] {
+    background-color: var(--color-white) !important;
+    color: var(--color-black) !important;
+}
+.button[data-color="secondary"] {
+    background-color: var(--color-secondary) !important;
+    color: var(--color-white) !important;
+}
+.button[data-size="md"] {
+    height: 32px !important;
+}
+.button[data-size="lg"] {
+    height: 40px !important;
+}
+.button[data-size="xl"] {
+    height: 48px !important;
+}
+.button:disabled {
+    background-color: var(--color-disabled-background) !important;
+    color: var(--color-disabled-text) !important;
+}

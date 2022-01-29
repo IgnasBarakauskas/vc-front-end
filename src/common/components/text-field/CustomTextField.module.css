@@ -1,0 +1,10 @@
+.textField--fullWidth {
+    width: 100%;
+}
+.textField input {
+    background-color: var(--color-light-green);
+}
+.textField * {
+    border-radius: 50px !important;
+    border-color: transparent;
+}
