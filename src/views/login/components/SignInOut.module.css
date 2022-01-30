@@ -41,6 +41,7 @@
 }
 .textField {
     width: 80%;
+    min-width: 260px !important;
 }
 .errorText {
     padding-left: 52px;

@@ -47,7 +47,7 @@ const SignIn = ({ open }) => {
                     onClick={handleChangeShowPassword}
                     onChange={handlePassword}
                     className={styles.textField}
-                    icon={showPassword ? icon.faEye : icon.faEyeSlash}
+                    icon={showPassword ? icon.faEyeSlash : icon.faEye}
                 />
                 <div className={styles.errorText}>{passwordErr || " "}</div>
             </div>

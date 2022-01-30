@@ -77,7 +77,7 @@ const SignUp = ({ open }) => {
                     type={showPassword ? "text" : "password"}
                     onClick={handleChangeShowPassword}
                     className={styles.textField}
-                    icon={showPassword ? icon.faEye : icon.faEyeSlash}
+                    icon={showPassword ? icon.faEyeSlash : icon.faEye}
                 />
                 <div className={styles.errorText}>{passwordErr || " "}</div>
                 <CustomTextField
@@ -87,7 +87,7 @@ const SignUp = ({ open }) => {
                     type={showPassword ? "text" : "password"}
                     onClick={handleChangeShowPassword}
                     className={styles.textField}
-                    icon={showPassword ? icon.faEye : icon.faEyeSlash}
+                    icon={showPassword ? icon.faEyeSlash : icon.faEye}
                 />
                 <div className={styles.errorText}>{rePasswordErr || " "}</div>
             </div>
