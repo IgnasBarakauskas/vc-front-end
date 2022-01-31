@@ -7,10 +7,10 @@
     display: inline-block;
     position: absolute;
     right: 0;
+    padding: 16px;
     height: 100%;
     width: calc(100% - 80px);
     height: calc(100% - 32px);
-    padding: 16px;
 }
 .userButton {
     width: 40px;

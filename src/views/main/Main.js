@@ -1,12 +1,22 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { MenuItem } from "@mui/material"
 import { CustomButton, DropDown } from "../../common/components"
-import { SidePanel } from "./components"
+import { SidePanel, Document } from "./components"
 import styles from "./Main.module.css"
+import { getUserId } from "../../common/utils/tokenUtils"
+import { getDocuments } from "../../services/documentServices"
 
 const Main = () => {
     const [userOpen, setUserOpen] = useState(false)
+    const [documents, setDocuments] = useState(null)
+    const [selectedDocumentId] = useState(0)
     const anchorRef = useRef(null)
+    useEffect(() => {
+        const userId = getUserId()
+        getDocuments(userId)
+            .then((data) => setDocuments(data.data.rdocuments))
+            .catch((err) => console.error(err))
+    }, [selectedDocumentId])
     const handleLogOut = () => {
         window.sessionStorage.clear()
         window.dispatchEvent(new Event("storage"))
@@ -38,6 +48,9 @@ const Main = () => {
                 <DropDown ref={anchorRef} open={userOpen} onClose={handleUserClose}>
                     <MenuItem onClick={handleLogOut}>Sign out</MenuItem>
                 </DropDown>
+                {Array.isArray(documents) && documents.length > 0 && (
+                    <Document document={documents[selectedDocumentId]} />
+                )}
             </div>
         </div>
     )

@@ -36,6 +36,7 @@
                 ]
             }
         ],
+        "no-underscore-dangle": "off",
         "no-unused-vars": "error",
         "max-len": [
             "warn",

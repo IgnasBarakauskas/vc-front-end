@@ -1,10 +1,19 @@
 .container {
     display: inline-block;
+    position: relative;
     padding: 8px 0;
-    width: 48px;
     height: 100%;
     background-image: url("../../../../common/images/backGround.jpg");
     background-size: cover;
+    z-index: 10;
+}
+.container[data-opened="true"] {
+    width: 33%;
+    transition: width 1s;
+}
+.container[data-opened="false"] {
+    width: 48px;
+    transition: width 1s;
 }
 .button {
     margin-left: 6px !important;
