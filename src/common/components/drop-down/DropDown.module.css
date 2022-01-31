@@ -1,0 +1,12 @@
+.dropDown__menus--hidden {
+    transform-origin: bottom;
+}
+.dropDown__menus--shown {
+    display: flex;
+    flex-direction: column;
+    transform-origin: top;
+}
+.dropDown__menus {
+    z-index: 1500;
+    max-height: 500px;
+}

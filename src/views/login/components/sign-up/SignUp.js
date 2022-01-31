@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 import { CustomButton, CustomTextField, icon } from "../../../../common/components"
 import regex from "../../../../common/utils"
+import { userSignUp } from "../../../../services/userServices"
 import styles from "../SignInOut.module.css"
 
-const SignUp = ({ open }) => {
+const SignUp = ({ onLogin, open }) => {
     const [showPassword, setShowPassWord] = useState(false)
     const [email, setEmail] = useState("")
     const [emailErr, setEmailErr] = useState("")
@@ -51,6 +52,13 @@ const SignUp = ({ open }) => {
             setRePasswordErr("")
         }
     }
+    const handleSignUp = () => {
+        if (email && name && password && rePassword && !emailErr && !nameErr && !passwordErr && !rePasswordErr) {
+            userSignUp({ email, name, password })
+                .then((data) => onLogin(data.data))
+                .catch((err) => console.error(err))
+        }
+    }
     return (
         <div className={`${styles.container} ${styles["container--right"]}`} data-fullwidth={open}>
             <div className={styles.primaryText}>Create a new account</div>
@@ -62,14 +70,14 @@ const SignUp = ({ open }) => {
                     placeholder="Email"
                     className={styles.textField}
                 />
-                <div className={styles.errorText}>{emailErr || " "}</div>
+                <div className={styles.errorText}>{emailErr}&nbsp;</div>
                 <CustomTextField
                     onChange={handleName}
                     value={name}
                     placeholder="Full name"
                     className={styles.textField}
                 />
-                <div className={styles.errorText}>{nameErr || " "}</div>
+                <div className={styles.errorText}>{nameErr}&nbsp;</div>
                 <CustomTextField
                     value={password}
                     onChange={handlePassword}
@@ -79,7 +87,7 @@ const SignUp = ({ open }) => {
                     className={styles.textField}
                     icon={showPassword ? icon.faEyeSlash : icon.faEye}
                 />
-                <div className={styles.errorText}>{passwordErr || " "}</div>
+                <div className={styles.errorText}>{passwordErr}&nbsp;</div>
                 <CustomTextField
                     value={rePassword}
                     onChange={handleRePassword}
@@ -89,10 +97,10 @@ const SignUp = ({ open }) => {
                     className={styles.textField}
                     icon={showPassword ? icon.faEyeSlash : icon.faEye}
                 />
-                <div className={styles.errorText}>{rePasswordErr || " "}</div>
+                <div className={styles.errorText}>{rePasswordErr}&nbsp;</div>
             </div>
             <div className={styles.subContainer}>
-                <CustomButton className={styles.button} size="xl" color="secondary">
+                <CustomButton onClick={handleSignUp} className={styles.button} size="xl" color="secondary">
                     Sign Up
                 </CustomButton>
             </div>

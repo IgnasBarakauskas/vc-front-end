@@ -1,0 +1,14 @@
+.container {
+    display: inline-block;
+    padding: 8px 0;
+    width: 48px;
+    height: 100%;
+    background-image: url("../../../../common/images/backGround.jpg");
+    background-size: cover;
+}
+.button {
+    margin-left: 6px !important;
+    padding: 16px !important;
+    width: 32px;
+    min-width: 32px !important;
+}

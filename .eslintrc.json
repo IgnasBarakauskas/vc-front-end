@@ -27,6 +27,15 @@
                 "endOfLine": "auto"
             }
         ],
+        "no-console": [
+            "warn",
+            {
+                "allow": [
+                    "off",
+                    "error"
+                ]
+            }
+        ],
         "no-unused-vars": "error",
         "max-len": [
             "warn",
@@ -65,6 +74,12 @@
             1
         ],
         "react/function-component-definition": [
+            "off"
+        ],
+        "react/display-name": [
+            "off"
+        ],
+        "react/jsx-props-no-spreading": [
             "off"
         ],
         "react/no-unescaped-entities": [

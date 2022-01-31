@@ -8,6 +8,11 @@ const Login = () => {
     const changeMode = () => {
         setIsLoging(!isLoging)
     }
+    const handleLogin = (data) => {
+        window.sessionStorage.setItem("token", data.token)
+        window.sessionStorage.setItem("name", data.data.name)
+        window.dispatchEvent(new Event("storage"))
+    }
     return (
         <div className={styles.container}>
             <div className={styles.selector} data-login={isLoging}>
@@ -25,8 +30,8 @@ const Login = () => {
                     </CustomButton>
                 </div>
             </div>
-            <SignIn open={isLoging} />
-            <SignUp open={!isLoging} />
+            <SignIn onLogin={handleLogin} open={isLoging} />
+            <SignUp onLogin={handleLogin} open={!isLoging} />
         </div>
     )
 }

@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 import { CustomTextField, CustomButton, icon } from "../../../../common/components"
 import regex from "../../../../common/utils"
+import { userSignIn } from "../../../../services/userServices"
 import styles from "../SignInOut.module.css"
 
-const SignIn = ({ open }) => {
+const SignIn = ({ onLogin, open }) => {
     const [showPassword, setShowPassWord] = useState(false)
     const [password, setPassword] = useState("")
     const [passwordErr, setPasswordErr] = useState("")
@@ -28,6 +29,13 @@ const SignIn = ({ open }) => {
             setEmailErr("")
         }
     }
+    const handleSignIn = () => {
+        if (email && password && !emailErr && !passwordErr) {
+            userSignIn({ email, password })
+                .then((data) => onLogin(data.data))
+                .catch((err) => console.error(err))
+        }
+    }
     return (
         <div className={`${styles.container} ${styles["container--left"]}`} data-fullwidth={open}>
             <div className={styles.primaryText}>Login to your account</div>
@@ -39,7 +47,7 @@ const SignIn = ({ open }) => {
                     placeholder="Email"
                     className={styles.textField}
                 />
-                <div className={styles.errorText}>{emailErr || " "}</div>
+                <div className={styles.errorText}>{emailErr}&nbsp;</div>
                 <CustomTextField
                     placeholder="Password"
                     value={password}
@@ -49,10 +57,10 @@ const SignIn = ({ open }) => {
                     className={styles.textField}
                     icon={showPassword ? icon.faEyeSlash : icon.faEye}
                 />
-                <div className={styles.errorText}>{passwordErr || " "}</div>
+                <div className={styles.errorText}>{passwordErr}&nbsp;</div>
             </div>
             <div className={styles.subContainer}>
-                <CustomButton className={styles.button} size="xl" color="secondary">
+                <CustomButton onClick={handleSignIn} className={styles.button} size="xl" color="secondary">
                     Sign In
                 </CustomButton>
             </div>

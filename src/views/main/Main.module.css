@@ -1,0 +1,21 @@
+.container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.subContainer {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: calc(100% - 80px);
+    height: calc(100% - 32px);
+    padding: 16px;
+}
+.userButton {
+    width: 40px;
+    float: right;
+    min-width: 40px !important;
+    padding: 0px !important;
+    text-transform: uppercase !important;
+}
