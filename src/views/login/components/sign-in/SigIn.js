@@ -10,6 +10,7 @@ const SignIn = ({ onLogin, open }) => {
     const [passwordErr, setPasswordErr] = useState("")
     const [email, setEmail] = useState("")
     const [emailErr, setEmailErr] = useState("")
+    const [serverErr, setServerErr] = useState("")
     const handleChangeShowPassword = () => {
         setShowPassWord(!showPassword)
     }
@@ -32,8 +33,14 @@ const SignIn = ({ onLogin, open }) => {
     const handleSignIn = () => {
         if (email && password && !emailErr && !passwordErr) {
             userSignIn({ email, password })
-                .then((data) => onLogin(data.data))
-                .catch((err) => console.error(err))
+                .then((data) => {
+                    onLogin(data.data)
+                    setServerErr("")
+                })
+                .catch((err) => {
+                    console.error(err)
+                    setServerErr("*Your credentials was not right")
+                })
         }
     }
     return (
@@ -58,6 +65,7 @@ const SignIn = ({ onLogin, open }) => {
                     icon={showPassword ? icon.faEyeSlash : icon.faEye}
                 />
                 <div className={styles.errorText}>{passwordErr}&nbsp;</div>
+                <div className={styles.errorText}>{serverErr}&nbsp;</div>
             </div>
             <div className={styles.subContainer}>
                 <CustomButton onClick={handleSignIn} className={styles.button} size="xl" color="secondary">

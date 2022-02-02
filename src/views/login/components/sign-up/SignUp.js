@@ -14,6 +14,7 @@ const SignUp = ({ onLogin, open }) => {
     const [passwordErr, setPasswordErr] = useState("")
     const [rePassword, setRePassword] = useState("")
     const [rePasswordErr, setRePasswordErr] = useState("")
+    const [serverErr, setServerErr] = useState("")
     const handleChangeShowPassword = () => {
         setShowPassWord(!showPassword)
     }
@@ -55,8 +56,14 @@ const SignUp = ({ onLogin, open }) => {
     const handleSignUp = () => {
         if (email && name && password && rePassword && !emailErr && !nameErr && !passwordErr && !rePasswordErr) {
             userSignUp({ email, name, password })
-                .then((data) => onLogin(data.data))
-                .catch((err) => console.error(err))
+                .then((data) => {
+                    onLogin(data.data)
+                    setServerErr("")
+                })
+                .catch((err) => {
+                    console.error(err)
+                    setServerErr("*Your email is already taken")
+                })
         }
     }
     return (
@@ -98,6 +105,7 @@ const SignUp = ({ onLogin, open }) => {
                     icon={showPassword ? icon.faEyeSlash : icon.faEye}
                 />
                 <div className={styles.errorText}>{rePasswordErr}&nbsp;</div>
+                <div className={styles.errorText}>{serverErr}&nbsp;</div>
             </div>
             <div className={styles.subContainer}>
                 <CustomButton onClick={handleSignUp} className={styles.button} size="xl" color="secondary">
