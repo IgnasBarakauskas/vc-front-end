@@ -34,7 +34,7 @@ const Main = () => {
     }
     return (
         <div className={styles.container}>
-            <SidePanel />
+            <SidePanel documents={documents} />
             <div className={styles.subContainer}>
                 <CustomButton
                     ref={anchorRef}

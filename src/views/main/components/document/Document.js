@@ -27,7 +27,7 @@ const Document = ({ document }) => {
         ) {
             documentPrefixesIds.forEach((id) => {
                 prefixes.forEach((prefix) => {
-                    if (id !== prefix) {
+                    if (id === prefix) {
                         console.log(id._id, "===", prefix._id)
                     }
                 })

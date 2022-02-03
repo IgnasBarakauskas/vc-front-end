@@ -2,8 +2,9 @@ import React, { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { CustomButton, icon } from "../../../../common/components"
 import styles from "./SidePanel.module.css"
+import DocumentList from "./components/document-list/DocumentList"
 
-const SidePanel = () => {
+const SidePanel = ({ documents }) => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => {
         setOpen(!open)
@@ -13,6 +14,12 @@ const SidePanel = () => {
             <CustomButton onClick={handleOpen} color="transparent" className={styles.button}>
                 <FontAwesomeIcon size="2x" icon={icon.faBars} />
             </CustomButton>
+            <div>
+                <FontAwesomeIcon size="2x" icon={icon.fasFaMinus} />
+            </div>
+            <div>
+                <DocumentList documents={documents} />
+            </div>
         </div>
     )
 }
