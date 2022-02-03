@@ -31,3 +31,16 @@
     background-color: var(--color-disabled-background) !important;
     color: var(--color-disabled-text) !important;
 }
+.icon[data-size="xl"] {
+    font-size: 16px !important;
+}
+.icon[data-size="lg"] {
+    font-size: 16px !important;
+}
+.icon[data-size="md"] {
+    font-size: 13px !important;
+}
+.button:disabled {
+    background-color: var(--color-disabled-background) !important;
+    color: var(--color-disabled-text) !important;
+}

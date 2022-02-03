@@ -6,7 +6,7 @@ import styles from "./Main.module.css"
 import { getUserId } from "../../common/utils/tokenUtils"
 import { getDocuments } from "../../services/documentServices"
 
-const Main = () => {
+const Main = ({ isLogged }) => {
     const [userOpen, setUserOpen] = useState(false)
     const [documents, setDocuments] = useState(null)
     const [selectedDocumentId] = useState(0)
@@ -16,7 +16,7 @@ const Main = () => {
         getDocuments(userId)
             .then((data) => setDocuments(data.data.rdocuments))
             .catch((err) => console.error(err))
-    }, [selectedDocumentId])
+    }, [selectedDocumentId, isLogged])
     const handleLogOut = () => {
         window.sessionStorage.clear()
         window.dispatchEvent(new Event("storage"))

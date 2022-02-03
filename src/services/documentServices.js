@@ -2,11 +2,13 @@ import axios from "axios"
 import config from "./config.json"
 
 const documentApi = `${config.API}documents/`
-const token = { headers: { Authorization: `Bearer ${window.sessionStorage.getItem("token")}` } }
+const getToken = () => {
+    return { headers: { Authorization: `Bearer ${window.sessionStorage.getItem("token")}` } }
+}
 
 export function createDocument(document) {
-    return axios.post(`${documentApi}document`, document, token)
+    return axios.post(`${documentApi}document`, document, getToken())
 }
 export function getDocuments(userId) {
-    return axios.get(`${documentApi}my-documents/${userId}`, token)
+    return axios.get(`${documentApi}my-documents/${userId}`, getToken())
 }
