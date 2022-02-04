@@ -14,12 +14,11 @@ const SidePanel = ({ documents }) => {
             <CustomButton onClick={handleOpen} color="transparent" className={styles.button}>
                 <FontAwesomeIcon size="2x" icon={icon.faBars} />
             </CustomButton>
-            <div>
-                <FontAwesomeIcon size="2x" icon={icon.fasFaMinus} />
-            </div>
-            <div>
-                <DocumentList documents={documents} />
-            </div>
+            {open && (
+                <div>
+                    <DocumentList documents={documents} />
+                </div>
+            )}
         </div>
     )
 }
