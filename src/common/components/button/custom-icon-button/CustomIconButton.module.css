@@ -1,0 +1,31 @@
+.button {
+    min-width: 0px !important;
+    border-radius: 50%;
+}
+.icon[data-color="secondary"] {
+    color: var(--color-dark-grey);
+}
+.icon[data-color="primary"] {
+    color: var(--color-secondary);
+}
+.icon[data-size="sm"] {
+    font-size: 12px;
+}
+.icon[data-size="md"] {
+    font-size: 20px;
+}
+.icon[data-size="lg"] {
+    font-size: 28px;
+}
+.button[data-size="sm"] {
+    width: 20px !important;
+    height: 20px !important;
+}
+.button[data-size="md"] {
+    width: 32px !important;
+    height: 32px !important;
+}
+.button[data-size="lg"] {
+    width: 40px !important;
+    height: 40px !important;
+}

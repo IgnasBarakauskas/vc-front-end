@@ -21,3 +21,14 @@
     width: 32px;
     min-width: 32px !important;
 }
+.contentContainer {
+    z-index: 100;
+}
+.contentContainer[data-open="false"] {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.contentContainer[data-open="true"] {
+    opacity: 1;
+    transition: opacity 0.5s;
+}
