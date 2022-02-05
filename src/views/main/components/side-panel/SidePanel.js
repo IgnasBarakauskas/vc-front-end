@@ -1,11 +1,22 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { CustomButton, icon } from "../../../../common/components"
 import styles from "./SidePanel.module.css"
+import Footer from "./components/footer/Footer"
 import DocumentList from "./components/document-list/DocumentList"
 
-const SidePanel = ({ documents }) => {
+const SidePanel = ({ documents, onAddNewDocument }) => {
     const [open, setOpen] = useState(false)
+    const [showContent, setShowContent] = useState(false)
+    useEffect(() => {
+        if (open) {
+            setTimeout(() => {
+                setShowContent(true)
+            }, 600)
+        } else {
+            setShowContent(false)
+        }
+    }, [open])
     const handleOpen = () => {
         setOpen(!open)
     }
@@ -15,8 +26,9 @@ const SidePanel = ({ documents }) => {
                 <FontAwesomeIcon size="2x" icon={icon.faBars} />
             </CustomButton>
             {open && (
-                <div>
+                <div data-open={showContent} className={styles.contentContainer}>
                     <DocumentList documents={documents} />
+                    <Footer onAddNewDocument={onAddNewDocument} open={showContent} />
                 </div>
             )}
         </div>
