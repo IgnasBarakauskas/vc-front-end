@@ -8,6 +8,8 @@
     --color-disabled-text: #7f8684;
     --color-disabled-background: #c5ccca;
     --color-dark-red: #d12626;
+    --color-grey: #dadada;
+    --color-dark-grey: #a6b4b3;
 }
 body {
     margin: 0;
