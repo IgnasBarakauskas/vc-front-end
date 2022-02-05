@@ -1,0 +1,7 @@
+.dialog__title {
+    border-bottom: 1px solid var(--color-grey);
+}
+.dialogTitle__content {
+    display: flex;
+    justify-content: space-between;
+}

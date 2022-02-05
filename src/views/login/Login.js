@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import CustomButton from "../../common/components/button/CustomButton"
+import { CustomButton } from "../../common/components"
 import { SignIn, SignUp } from "./components"
 import styles from "./Login.module.css"
 

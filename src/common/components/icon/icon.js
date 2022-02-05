@@ -1,4 +1,4 @@
-import { faEye, faEyeSlash, faBars, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons"
+import { faEye, faEyeSlash, faBars, faPlus, faMinus, faTimes } from "@fortawesome/free-solid-svg-icons"
 
 const icon = {
     faEye,
@@ -6,5 +6,6 @@ const icon = {
     faBars,
     faPlus,
     faMinus,
+    faTimes,
 }
 export default icon
