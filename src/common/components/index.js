@@ -1,5 +1,6 @@
 export { default as icon } from "./icon/icon"
 export { default as CustomTextField } from "./text-field/CustomTextField"
 export { default as DropDown } from "./drop-down/DropDown"
+export { default as EmptyState } from "./empty-state/EmptyState"
 export * from "./button"
 export * from "./dialog"

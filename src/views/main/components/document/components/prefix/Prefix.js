@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react"
 import { Divider, MenuItem } from "@mui/material"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { CustomButton, DropDown, icon } from "../../../../../common/components"
+import { CustomButton, DropDown, icon } from "../../../../../../common/components"
 import styles from "./Prefix.module.css"
 
 const Prefix = ({ prefixes = [], onAddPrefix = null, documentPrefixes = [], onRemovePrefix = null }) => {

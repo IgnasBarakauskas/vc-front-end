@@ -5,7 +5,7 @@ import {
     getDocumentPrefixes,
     removePrefixFromDocument,
 } from "../../../../services/prefixServices"
-import Prefix from "./components/Prefix"
+import { Rows, Prefix } from "./components"
 import styles from "./Document.module.css"
 
 const Document = ({ document }) => {
@@ -67,6 +67,7 @@ const Document = ({ document }) => {
                 documentPrefixes={documentPrefixes}
                 onRemovePrefix={handleRemovePrefix}
             />
+            <Rows documentPrefixes={documentPrefixes} />
         </div>
     )
 }
