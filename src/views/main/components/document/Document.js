@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react"
+import { createDocumentRowConcept } from "../../../../services/documentRowServices"
+import { getAllItems } from "../../../../services/itemServices"
+import { getAllLabels } from "../../../../services/labelServises"
+import { getAllNodes } from "../../../../services/nodeServices"
 import {
     addPrefixToDocument,
     getAllPrefixes,
@@ -9,12 +13,24 @@ import { Rows, Prefix } from "./components"
 import styles from "./Document.module.css"
 
 const Document = ({ document }) => {
-    const [documentPrefixesIds, setDocumentPrefixesIds] = useState(null)
-    const [prefixes, setPrefixes] = useState(null)
+    const [documentPrefixesIds, setDocumentPrefixesIds] = useState([])
+    const [prefixes, setPrefixes] = useState([])
+    const [nodes, setNodes] = useState([])
+    const [labels, setLabels] = useState([])
+    const [items, setItems] = useState([])
     const [documentPrefixes, setDocumentPrefixes] = useState([])
     useEffect(() => {
         getAllPrefixes()
             .then((data) => setPrefixes(data.data.prefixes))
+            .catch((err) => console.error(err))
+        getAllNodes()
+            .then((data) => setNodes(data.data.rnodes))
+            .catch((err) => console.error(err))
+        getAllLabels()
+            .then((data) => setLabels(data.data.labels))
+            .catch((err) => console.error(err))
+        getAllItems()
+            .then((data) => setItems(data.data.items))
             .catch((err) => console.error(err))
     }, [])
     useEffect(() => {
@@ -58,6 +74,13 @@ const Document = ({ document }) => {
             })
             .catch((err) => console.error(err))
     }
+    const handleCreateDocumentRow = (newDocumentRow) => {
+        if (newDocumentRow.first_column && newDocumentRow.second_column && newDocumentRow.third_column) {
+            createDocumentRowConcept({ ...newDocumentRow, document_id: document._id })
+                .then((data) => console.log(data))
+                .catch((err) => console.error(err))
+        }
+    }
     return (
         <div>
             {document?.name && <div className={styles.documentName}>{document.name}</div>}
@@ -67,7 +90,13 @@ const Document = ({ document }) => {
                 documentPrefixes={documentPrefixes}
                 onRemovePrefix={handleRemovePrefix}
             />
-            <Rows documentPrefixes={documentPrefixes} />
+            <Rows
+                onCreateDocumentRow={handleCreateDocumentRow}
+                items={items}
+                documentPrefixes={documentPrefixes}
+                nodes={nodes}
+                labels={labels}
+            />
         </div>
     )
 }

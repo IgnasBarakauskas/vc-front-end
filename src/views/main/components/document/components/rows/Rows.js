@@ -3,10 +3,16 @@ import DocumentRow from "./DocumentRow"
 import DocumentTriplet from "./DocumentTriplet"
 import styles from "./Rows.module.css"
 
-const Rows = ({ documentPrefixes }) => {
+const Rows = ({ documentPrefixes, nodes, labels, items, onCreateDocumentRow }) => {
     return (
         <div className={styles.container}>
-            <DocumentRow documentPrefixes={documentPrefixes} />
+            <DocumentRow
+                nodes={nodes}
+                documentPrefixes={documentPrefixes}
+                items={items}
+                labels={labels}
+                onCreateDocumentRow={onCreateDocumentRow}
+            />
             <DocumentTriplet />
         </div>
     )
