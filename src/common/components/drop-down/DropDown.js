@@ -22,7 +22,7 @@ const DropDown = React.forwardRef(
                     <Paper elevation={5} square={false} variant="elevation">
                         <ClickAwayListener
                             onClickAway={(e) => {
-                                onClose(e, ref)
+                                onClose(e)
                             }}
                         >
                             {children}

@@ -6,9 +6,9 @@ const getToken = () => {
     return { headers: { Authorization: `Bearer ${window.sessionStorage.getItem("token")}` } }
 }
 
-export function createnode(node) {
-    return axios.post(`${documentApi}rnodes`, node, getToken())
+export function createNode(node) {
+    return axios.post(`${nodeApi}rnodes`, node, getToken())
 }
-export function getNodes(userId) {
-    return axios.get(`${documentApi}all-rnodes/${userId}`, getToken())
+export function getAllNodes() {
+    return axios.get(`${nodeApi}all-rnodes`, getToken())
 }
