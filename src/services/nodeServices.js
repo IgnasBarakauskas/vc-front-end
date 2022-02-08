@@ -7,7 +7,7 @@ const getToken = () => {
 }
 
 export function createNode(node) {
-    return axios.post(`${nodeApi}rnodes`, node, getToken())
+    return axios.post(`${nodeApi}rnode`, node, getToken())
 }
 export function getAllNodes() {
     return axios.get(`${nodeApi}all-rnodes`, getToken())

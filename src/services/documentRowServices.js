@@ -13,6 +13,6 @@ export function createDocumentRowConcept(documentRow) {
         getToken()
     )
 }
-export function getAllItems() {
-    return axios.get(`${documentRows}all-items`, getToken())
+export function getAllDocumentConcepts(documentId) {
+    return axios.get(`${documentRows}all-properties-and-concepts-document-rows/${documentId}`, getToken())
 }
