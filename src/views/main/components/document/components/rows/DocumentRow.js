@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react"
 import { CustomButton, CustomIconButton, CustomTextField, EmptyState, icon } from "../../../../../../common/components"
+import { createItem } from "../../../../../../services/itemServices"
+import { createLabel } from "../../../../../../services/labelServises"
+import { createNode } from "../../../../../../services/nodeServices"
 import LocalDropDown from "./LocalDropDown"
 import styles from "./Rows.module.css"
 
-const DocumentRow = ({ documentPrefixes = [], nodes = [], labels = [], items = [], onCreateDocumentRow = null }) => {
+const DocumentRow = ({ documentPrefixes = [], nodes = [], labels = [], items = [], onCreateDocumentRow }) => {
     const [documentNodePrefix, setDocumentNodePrefix] = useState(null)
     const [documentLabelPrefix, setDocumentLabelPrefix] = useState(null)
     const [filteredNodes, setFilteredNodes] = useState([])
@@ -16,6 +19,9 @@ const DocumentRow = ({ documentPrefixes = [], nodes = [], labels = [], items = [
     const [nodeValue, setNodeValue] = useState({ name: "" })
     const [labelValue, setLabelValue] = useState({ name: "" })
     const [itemValue, setItemValue] = useState({ name: "" })
+    const [firstColumn, setFirstColum] = useState(null)
+    const [secondColumn, setSecondColumn] = useState(null)
+    const [thirdColumn, setThirdColumn] = useState(null)
     const [mode, setMode] = useState("")
     const anchorRefNode = useRef(null)
     const anchorRefLabel = useRef(null)
@@ -29,13 +35,13 @@ const DocumentRow = ({ documentPrefixes = [], nodes = [], labels = [], items = [
         }
     }, [documentPrefixes])
     useEffect(() => {
-        const tempNodes = nodes.filter((node) => node.rprefix_id._id === documentNodePrefix._id)
+        const tempNodes = nodes.filter((node) => node.rprefix_id?._id === documentNodePrefix?._id)
         setFilteredNodes(
             tempNodes.filter((node) => node.name.toLowerCase().includes(nodeValue.name.toLowerCase())).slice(0, 10)
         )
     }, [nodes, documentNodePrefix, nodeValue.name])
     useEffect(() => {
-        const tempLabels = labels.filter((label) => label.rprefix_id._id === documentLabelPrefix._id)
+        const tempLabels = labels.filter((label) => label.rprefix_id?._id === documentLabelPrefix?._id)
         setFilteredLabels(
             tempLabels.filter((label) => label.name.toLowerCase().includes(labelValue.name.toLowerCase())).slice(0, 10)
         )
@@ -45,6 +51,14 @@ const DocumentRow = ({ documentPrefixes = [], nodes = [], labels = [], items = [
             items.filter((item) => item.name.toLowerCase().includes(itemValue.name.toLowerCase())).slice(0, 10)
         )
     }, [items, itemValue.name])
+    useEffect(() => {
+        if (firstColumn?._id && secondColumn?._id && thirdColumn?._id) {
+            onCreateDocumentRow(firstColumn, secondColumn, thirdColumn)
+            setFirstColum(null)
+            setSecondColumn(null)
+            setThirdColumn(null)
+        }
+    }, [firstColumn, secondColumn, thirdColumn, onCreateDocumentRow])
     const handleOpen = (newMode) => {
         setOpenPrefixes(true)
         setMode(newMode)
@@ -73,7 +87,63 @@ const DocumentRow = ({ documentPrefixes = [], nodes = [], labels = [], items = [
         setItemValue({ name: value })
     }
     const handleCreateDocumentRow = () => {
-        onCreateDocumentRow({ first_column: nodeValue._id, second_column: labelValue._id, third_column: itemValue._id })
+        setFirstColum(null)
+        setSecondColumn(null)
+        setThirdColumn(null)
+        if (!nodeValue?._id && labelValue.name.length > 3 && itemValue.name.length > 1) {
+            if (
+                Array.isArray(filteredNodes) &&
+                filteredNodes.length === 1 &&
+                nodeValue.name.toLowerCase() === filteredNodes[0].name.toLowerCase()
+            ) {
+                setFirstColum(filteredNodes[0])
+            } else {
+                if (nodeValue.name?.length > 3 && documentNodePrefix._id) {
+                    createNode({ name: nodeValue.name, prefix_id: documentNodePrefix._id })
+                        .then((data) => setFirstColum(data.data))
+                        .catch((err) => console.error(err))
+                }
+            }
+        }
+        if (nodeValue._id && labelValue.name.length > 3 && itemValue.name.length > 1) {
+            setFirstColum(nodeValue)
+        }
+        if (!labelValue?._id && nodeValue.name.length > 3 && itemValue.name.length > 1) {
+            if (
+                Array.isArray(filteredLabels) &&
+                filteredLabels.length === 1 &&
+                labelValue.name.toLowerCase() === filteredLabels[0].name.toLowerCase()
+            ) {
+                setSecondColumn(filteredLabels[0])
+            } else {
+                if (labelValue.name?.length > 3 && documentLabelPrefix._id) {
+                    createLabel({ name: labelValue.name, prefix_id: documentLabelPrefix._id, label_type: "generic" })
+                        .then((data) => setSecondColumn(data.data))
+                        .catch((err) => console.error(err))
+                }
+            }
+        }
+        if (labelValue._id && nodeValue.name.length > 3 && itemValue.name.length > 1) {
+            setSecondColumn(labelValue)
+        }
+        if (!itemValue?._id && nodeValue.name.length > 3 && labelValue.name.length > 3) {
+            if (
+                Array.isArray(filteredItems) &&
+                filteredItems.length === 1 &&
+                itemValue.name.toLowerCase() === filteredItems[0].name.toLowerCase()
+            ) {
+                setThirdColumn(filteredItems[0])
+            } else {
+                if (itemValue.name?.length > 1) {
+                    createItem({ name: itemValue.name })
+                        .then((data) => setThirdColumn(data.data))
+                        .catch((err) => console.error(err))
+                }
+            }
+        }
+        if (itemValue._id && nodeValue.name.length > 3 && labelValue.name.length > 3) {
+            setThirdColumn(itemValue)
+        }
     }
     return (
         <div className={styles.subContainer}>
