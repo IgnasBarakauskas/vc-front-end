@@ -1,0 +1,11 @@
+.container {
+    padding: 4px 16px;
+    height: 32px;
+    line-height: 32px;
+    width: 100%;
+    color: var(--color-empty-text);
+    background-color: var(--color-empty-background);
+}
+.icon {
+    margin-right: 8px;
+}

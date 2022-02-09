@@ -1,7 +1,7 @@
 import React from "react"
 import { DialogTitle } from "@mui/material"
-import styles from "./CustomDialogTitle.module.css"
 import { CustomIconButton, icon } from "../.."
+import styles from "./CustomDialogTitle.module.css"
 
 const CustomDialogTitle = ({ children, onClose }) => {
     return (
