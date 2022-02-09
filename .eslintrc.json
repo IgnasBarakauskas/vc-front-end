@@ -36,6 +36,7 @@
                 ]
             }
         ],
+        "no-cycle": "off",
         "no-underscore-dangle": "off",
         "no-lonely-if": "off",
         "no-unused-vars": "error",

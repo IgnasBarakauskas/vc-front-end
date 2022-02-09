@@ -16,6 +16,11 @@
 }
 .button[data-color="light-secondary"] {
     background-color: var(--color-light-green) !important;
+    color: var(--color-secondary) !important;
+    font-weight: 700;
+}
+.button[data-color="light-secondary--black"] {
+    background-color: var(--color-light-green) !important;
     color: var(--color-black) !important;
 }
 .button[data-color="transparent"] {
