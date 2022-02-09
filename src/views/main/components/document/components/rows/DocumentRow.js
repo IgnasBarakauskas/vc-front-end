@@ -3,10 +3,22 @@ import { CustomButton, CustomIconButton, CustomTextField, EmptyState, icon } fro
 import { createItem } from "../../../../../../services/itemServices"
 import { createLabel } from "../../../../../../services/labelServises"
 import { createNode } from "../../../../../../services/nodeServices"
+import DocumentRows from "./DocumentRows"
 import LocalDropDown from "./LocalDropDown"
 import styles from "./Rows.module.css"
 
-const DocumentRow = ({ documentPrefixes = [], nodes = [], labels = [], items = [], onCreateDocumentRow }) => {
+const DocumentRow = ({
+    documentPrefixes = [],
+    nodes = [],
+    labels = [],
+    items = [],
+    onCreateDocumentRow,
+    documentRows = [],
+    onDeleteDocumentRow,
+    onSelectDocumentRow,
+    selectedDocumentRows,
+    onUnselectDocRow,
+}) => {
     const [documentNodePrefix, setDocumentNodePrefix] = useState(null)
     const [documentLabelPrefix, setDocumentLabelPrefix] = useState(null)
     const [filteredNodes, setFilteredNodes] = useState([])
@@ -37,18 +49,18 @@ const DocumentRow = ({ documentPrefixes = [], nodes = [], labels = [], items = [
     useEffect(() => {
         const tempNodes = nodes.filter((node) => node.rprefix_id?._id === documentNodePrefix?._id)
         setFilteredNodes(
-            tempNodes.filter((node) => node.name.toLowerCase().includes(nodeValue.name.toLowerCase())).slice(0, 10)
+            tempNodes.filter((node) => node.name.toLowerCase().includes(nodeValue.name.toLowerCase())).slice(0, 5)
         )
     }, [nodes, documentNodePrefix, nodeValue.name])
     useEffect(() => {
         const tempLabels = labels.filter((label) => label.rprefix_id?._id === documentLabelPrefix?._id)
         setFilteredLabels(
-            tempLabels.filter((label) => label.name.toLowerCase().includes(labelValue.name.toLowerCase())).slice(0, 10)
+            tempLabels.filter((label) => label.name.toLowerCase().includes(labelValue.name.toLowerCase())).slice(0, 5)
         )
     }, [labels, documentLabelPrefix, labelValue.name])
     useEffect(() => {
         setFilteredItems(
-            items.filter((item) => item.name.toLowerCase().includes(itemValue.name.toLowerCase())).slice(0, 10)
+            items.filter((item) => item.name.toLowerCase().includes(itemValue.name.toLowerCase())).slice(0, 5)
         )
     }, [items, itemValue.name])
     useEffect(() => {
@@ -147,7 +159,16 @@ const DocumentRow = ({ documentPrefixes = [], nodes = [], labels = [], items = [
     }
     return (
         <div className={styles.subContainer}>
-            <EmptyState>There are no document rows</EmptyState>
+            {(Array.isArray(documentRows) && documentRows.length > 0 && (
+                <DocumentRows
+                    documentRows={documentRows}
+                    onDeleteDocumentRow={onDeleteDocumentRow}
+                    onSelectDocumentRow={onSelectDocumentRow}
+                    selectedDocumentRows={selectedDocumentRows}
+                    onUnselectDocRow={onUnselectDocRow}
+                />
+            )) || <EmptyState>There are no document rows</EmptyState>}
+
             {documentNodePrefix && documentLabelPrefix && (
                 <>
                     <div className={styles.input}>
@@ -155,7 +176,7 @@ const DocumentRow = ({ documentPrefixes = [], nodes = [], labels = [], items = [
                             size="lg"
                             onClick={() => handleOpen("node")}
                             ref={anchorRefNode}
-                            color="light-secondary"
+                            color="light-secondary--black"
                             className={styles.input__button}
                         >
                             {documentNodePrefix.name}
@@ -175,7 +196,7 @@ const DocumentRow = ({ documentPrefixes = [], nodes = [], labels = [], items = [
                             size="lg"
                             onClick={() => handleOpen("label")}
                             ref={anchorRefLabel}
-                            color="light-secondary"
+                            color="light-secondary--black"
                             className={`${styles.input__button} ${styles["input__button--inner"]}`}
                         >
                             {documentLabelPrefix.name}

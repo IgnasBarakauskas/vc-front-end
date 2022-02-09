@@ -1,0 +1,29 @@
+.tableContainer {
+    max-height: 78%;
+    width: 100%;
+    overflow: auto;
+}
+.tableCell {
+    background-color: var(--color-light-green);
+}
+.idButton {
+    min-width: 32px !important;
+    width: 32px;
+    padding: 0 !important;
+}
+.tableCell--icon {
+    width: 40px;
+}
+.tableCell--last {
+    border-bottom: none !important;
+}
+.prefix {
+    display: inline-block;
+    padding: 0 4px;
+    color: var(--color-dark-grey);
+}
+.name {
+    display: inline-block;
+    padding: 0 8px;
+    color: var(--color-secondary);
+}

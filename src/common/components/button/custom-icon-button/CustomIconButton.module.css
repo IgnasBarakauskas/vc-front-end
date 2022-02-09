@@ -8,6 +8,9 @@
 .icon[data-color="primary"] {
     color: var(--color-secondary);
 }
+.icon[data-color="danger"] {
+    color: var(--color-red);
+}
 .icon[data-size="sm"] {
     font-size: 12px;
 }
