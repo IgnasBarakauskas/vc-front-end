@@ -14,6 +14,7 @@ const Rows = ({
     onSelectDocumentRow,
     selectedDocumentRows,
     onUnselectDocRow,
+    loadingDocRows,
 }) => {
     return (
         <div className={styles.container}>
@@ -28,6 +29,7 @@ const Rows = ({
                 onSelectDocumentRow={onSelectDocumentRow}
                 selectedDocumentRows={selectedDocumentRows}
                 onUnselectDocRow={onUnselectDocRow}
+                loadingDocRows={loadingDocRows}
             />
             <DocumentTriplet />
         </div>

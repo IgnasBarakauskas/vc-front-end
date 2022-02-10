@@ -25,6 +25,7 @@ const Document = ({ document }) => {
     const [documentPrefixes, setDocumentPrefixes] = useState([])
     const [documentRows, setDocumentRows] = useState([])
     const [selectedDocumentRows, setSelectedDocumentRows] = useState([])
+    const [loadingDocRows, setloadingloadingDocRows] = useState(true)
     useEffect(() => {
         getAllPrefixes()
             .then((data) => setPrefixes(data.data.prefixes))
@@ -40,6 +41,7 @@ const Document = ({ document }) => {
             .catch((err) => console.error(err))
     }, [])
     useEffect(() => {
+        setloadingloadingDocRows(true)
         if (document._id) {
             getDocumentPrefixes(document._id)
                 .then((data) => {
@@ -50,6 +52,7 @@ const Document = ({ document }) => {
             getAllDocumentConcepts(document._id)
                 .then((data) => {
                     setDocumentRows(data.data.rdocumentRows)
+                    setloadingloadingDocRows(false)
                 })
                 .catch((err) => console.error(err))
         }
@@ -151,6 +154,7 @@ const Document = ({ document }) => {
                 onSelectDocumentRow={handleSelectDocumentRow}
                 selectedDocumentRows={selectedDocumentRows}
                 onUnselectDocRow={handleUnselectDocRow}
+                loadingDocRows={loadingDocRows}
             />
         </div>
     )

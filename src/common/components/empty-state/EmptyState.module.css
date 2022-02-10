@@ -9,3 +9,11 @@
 .icon {
     margin-right: 8px;
 }
+.loadingContainer {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+}
+.loading {
+    color: var(--color-secondary) !important;
+}
