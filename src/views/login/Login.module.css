@@ -1,7 +1,14 @@
 .container {
     display: flex;
-    height: 100%;
     overflow: hidden;
+}
+.container[data-open="true"] {
+    height: 100%;
+    transition: height 2s;
+}
+.container[data-open="false"] {
+    height: 0%;
+    transition: height 2s;
 }
 .selector {
     background-image: url("../../common/images/backGround.jpg");
