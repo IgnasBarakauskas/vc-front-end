@@ -4,7 +4,7 @@ import regex from "../../../../common/utils"
 import { userSignUp } from "../../../../services/userServices"
 import styles from "../SignInOut.module.css"
 
-const SignUp = ({ onLogin, open }) => {
+const SignUp = ({ onLogin, fullWidth }) => {
     const [showPassword, setShowPassWord] = useState(false)
     const [email, setEmail] = useState("")
     const [emailErr, setEmailErr] = useState("")
@@ -67,7 +67,7 @@ const SignUp = ({ onLogin, open }) => {
         }
     }
     return (
-        <div className={`${styles.container} ${styles["container--right"]}`} data-fullwidth={open}>
+        <div className={`${styles.container} ${styles["container--right"]}`} data-fullwidth={fullWidth}>
             <div className={styles.primaryText}>Create a new account</div>
             <div className={styles.secondaryText}>And start your journey with us</div>
             <div className={styles.subContainer}>
