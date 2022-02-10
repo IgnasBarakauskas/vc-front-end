@@ -18,6 +18,7 @@ const DocumentRow = ({
     onSelectDocumentRow,
     selectedDocumentRows,
     onUnselectDocRow,
+    loadingDocRows,
 }) => {
     const [documentNodePrefix, setDocumentNodePrefix] = useState(null)
     const [documentLabelPrefix, setDocumentLabelPrefix] = useState(null)
@@ -167,7 +168,7 @@ const DocumentRow = ({
                     selectedDocumentRows={selectedDocumentRows}
                     onUnselectDocRow={onUnselectDocRow}
                 />
-            )) || <EmptyState>There are no document rows</EmptyState>}
+            )) || <EmptyState isLoading={loadingDocRows}>There are no document rows</EmptyState>}
 
             {documentNodePrefix && documentLabelPrefix && (
                 <>
