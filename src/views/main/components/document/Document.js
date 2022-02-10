@@ -109,7 +109,7 @@ const Document = ({ document }) => {
     }
     const handleDeleteDocumentRow = (documentRowId) => {
         deleteDocumentRow(documentRowId)
-            .then(() => documentRows.filter((documentRow) => documentRow._id !== documentRowId))
+            .then(() => setDocumentRows(documentRows.filter((documentRow) => documentRow._id !== documentRowId)))
             .catch((err) => console.error(err))
     }
     const handleSelectDocumentRow = (selectedDocumentRow) => {
