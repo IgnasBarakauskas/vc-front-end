@@ -15,6 +15,10 @@ const Rows = ({
     selectedDocumentRows,
     onUnselectDocRow,
     loadingDocRows,
+    onCreateDocumentTriplet,
+    documentTriplets,
+    loadingDocTriplets,
+    onDeleteDocumentTriplet,
 }) => {
     return (
         <div className={styles.container}>
@@ -25,13 +29,18 @@ const Rows = ({
                 items={items}
                 documentRows={documentRows}
                 labels={labels}
+                onCreateDocumentTriplet={onCreateDocumentTriplet}
                 onCreateDocumentRow={onCreateDocumentRow}
                 onSelectDocumentRow={onSelectDocumentRow}
                 selectedDocumentRows={selectedDocumentRows}
                 onUnselectDocRow={onUnselectDocRow}
                 loadingDocRows={loadingDocRows}
             />
-            <DocumentTriplet />
+            <DocumentTriplet
+                onDeleteDocumentTriplet={onDeleteDocumentTriplet}
+                documentTriplets={documentTriplets}
+                loadingDocTriplets={loadingDocTriplets}
+            />
         </div>
     )
 }

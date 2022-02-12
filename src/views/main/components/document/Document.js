@@ -3,6 +3,8 @@ import {
     createDocumentRowConcept,
     deleteDocumentRow,
     getAllDocumentConcepts,
+    createDocumentRowTriplet,
+    getAllDocumentTriplets,
 } from "../../../../services/documentRowServices"
 import { getAllItems } from "../../../../services/itemServices"
 import { getAllLabels } from "../../../../services/labelServises"
@@ -24,8 +26,10 @@ const Document = ({ document }) => {
     const [items, setItems] = useState([])
     const [documentPrefixes, setDocumentPrefixes] = useState([])
     const [documentRows, setDocumentRows] = useState([])
+    const [documentTriplets, setDocumentTriplets] = useState([])
     const [selectedDocumentRows, setSelectedDocumentRows] = useState([])
-    const [loadingDocRows, setloadingloadingDocRows] = useState(true)
+    const [loadingDocRows, setLoadingloadingDocRows] = useState(true)
+    const [loadingDocTriplets, setLoadingDocTriplets] = useState(true)
     useEffect(() => {
         getAllPrefixes()
             .then((data) => setPrefixes(data.data.prefixes))
@@ -41,7 +45,8 @@ const Document = ({ document }) => {
             .catch((err) => console.error(err))
     }, [])
     useEffect(() => {
-        setloadingloadingDocRows(true)
+        setLoadingloadingDocRows(true)
+        setLoadingDocTriplets(true)
         if (document._id) {
             getDocumentPrefixes(document._id)
                 .then((data) => {
@@ -52,12 +57,34 @@ const Document = ({ document }) => {
             getAllDocumentConcepts(document._id)
                 .then((data) => {
                     setDocumentRows(data.data.rdocumentRows)
-                    setloadingloadingDocRows(false)
+                    setLoadingloadingDocRows(false)
                 })
                 .catch((err) => console.error(err))
         }
     }, [document._id])
 
+    useEffect(() => {
+        if (document._id && Array.isArray(documentRows) && documentRows.length > 0) {
+            getAllDocumentTriplets(document._id)
+                .then((data) => {
+                    setDocumentTriplets(
+                        data.data.rdocumentRows.map((documentTriplet) => {
+                            const first = documentRows.find((row) => row._id === documentTriplet.row_data.first_column)
+                            const second = documentRows.find(
+                                (row) => row._id === documentTriplet.row_data.second_column
+                            )
+                            const third = documentRows.find((row) => row._id === documentTriplet.row_data.third_column)
+                            return {
+                                ...documentTriplet,
+                                row_data: { first_column: first, second_column: second, third_column: third },
+                            }
+                        })
+                    )
+                    setLoadingDocTriplets(false)
+                })
+                .catch((err) => console.error(err))
+        }
+    }, [document._id, documentRows])
     useEffect(() => {
         if (
             Array.isArray(documentPrefixesIds) &&
@@ -110,9 +137,42 @@ const Document = ({ document }) => {
                 .catch((err) => console.error(err))
         }
     }
+    const handleCreateDocumentTriplet = () => {
+        if (
+            Array.isArray(selectedDocumentRows) &&
+            selectedDocumentRows.length === 3 &&
+            selectedDocumentRows[0]._id &&
+            selectedDocumentRows[1]._id &&
+            selectedDocumentRows[2]._id
+        ) {
+            createDocumentRowTriplet({
+                first_column: selectedDocumentRows[0]._id,
+                second_column: selectedDocumentRows[1]._id,
+                third_column: selectedDocumentRows[2]._id,
+                document_id: document._id,
+            })
+                .then((data) => {
+                    const first = documentRows.find((row) => row._id === data.data.row_data.first_column)
+                    const second = documentRows.find((row) => row._id === data.data.row_data.second_column)
+                    const third = documentRows.find((row) => row._id === data.data.row_data.third_column)
+                    setDocumentTriplets([
+                        { ...data.data, row_data: { first_column: first, second_column: second, third_column: third } },
+                        ...documentTriplets,
+                    ])
+                })
+                .catch((err) => console.error(err))
+        }
+    }
     const handleDeleteDocumentRow = (documentRowId) => {
         deleteDocumentRow(documentRowId)
             .then(() => setDocumentRows(documentRows.filter((documentRow) => documentRow._id !== documentRowId)))
+            .catch((err) => console.error(err))
+    }
+    const handleDeleteDocumentTriplet = (documentRowId) => {
+        deleteDocumentRow(documentRowId)
+            .then(() =>
+                setDocumentTriplets(documentTriplets.filter((documentRow) => documentRow._id !== documentRowId))
+            )
             .catch((err) => console.error(err))
     }
     const handleSelectDocumentRow = (selectedDocumentRow) => {
@@ -134,6 +194,7 @@ const Document = ({ document }) => {
     const handleUnselectDocRow = (selectedDocumentRow) => {
         setSelectedDocumentRows(selectedDocumentRows.map((docRow) => (docRow === selectedDocumentRow ? null : docRow)))
     }
+
     return (
         <div>
             {document?.name && <div className={styles.documentName}>{document.name}</div>}
@@ -150,10 +211,14 @@ const Document = ({ document }) => {
                 documentRows={documentRows}
                 documentPrefixes={documentPrefixes}
                 nodes={nodes}
+                onCreateDocumentTriplet={handleCreateDocumentTriplet}
                 labels={labels}
                 onSelectDocumentRow={handleSelectDocumentRow}
                 selectedDocumentRows={selectedDocumentRows}
                 onUnselectDocRow={handleUnselectDocRow}
+                documentTriplets={documentTriplets}
+                onDeleteDocumentTriplet={handleDeleteDocumentTriplet}
+                loadingDocTriplets={loadingDocTriplets}
                 loadingDocRows={loadingDocRows}
             />
         </div>
