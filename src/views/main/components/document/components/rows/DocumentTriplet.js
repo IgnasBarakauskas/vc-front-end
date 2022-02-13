@@ -11,7 +11,6 @@ const DocumentTriplet = ({ documentTriplets, loadingDocTriplets, onDeleteDocumen
                 <EmptyState isLoading={loadingDocTriplets}>There are no document triplets</EmptyState>
             )) || (
                 <div className={styles.tableContainer__triplets}>
-                    {console.log(documentTriplets)}
                     <Table>
                         <TableBody size="small">
                             {documentTriplets.map((documentTriplet, index) => (

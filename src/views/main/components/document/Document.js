@@ -18,7 +18,7 @@ import {
 import { Rows, Prefix } from "./components"
 import styles from "./Document.module.css"
 
-const Document = ({ document }) => {
+const Document = ({ rdocument }) => {
     const [documentPrefixesIds, setDocumentPrefixesIds] = useState([])
     const [prefixes, setPrefixes] = useState([])
     const [nodes, setNodes] = useState([])
@@ -47,25 +47,25 @@ const Document = ({ document }) => {
     useEffect(() => {
         setLoadingloadingDocRows(true)
         setLoadingDocTriplets(true)
-        if (document._id) {
-            getDocumentPrefixes(document._id)
+        if (rdocument._id) {
+            getDocumentPrefixes(rdocument._id)
                 .then((data) => {
                     setDocumentPrefixesIds(data.data.rdocumentPrefixes)
                 })
                 .catch((err) => console.error(err))
             setDocumentRows([])
-            getAllDocumentConcepts(document._id)
+            getAllDocumentConcepts(rdocument._id)
                 .then((data) => {
                     setDocumentRows(data.data.rdocumentRows)
                     setLoadingloadingDocRows(false)
                 })
                 .catch((err) => console.error(err))
         }
-    }, [document._id])
+    }, [rdocument._id])
 
     useEffect(() => {
-        if (document._id && Array.isArray(documentRows) && documentRows.length > 0) {
-            getAllDocumentTriplets(document._id)
+        if (rdocument._id && Array.isArray(documentRows) && documentRows.length > 0) {
+            getAllDocumentTriplets(rdocument._id)
                 .then((data) => {
                     setDocumentTriplets(
                         data.data.rdocumentRows.map((documentTriplet) => {
@@ -84,7 +84,7 @@ const Document = ({ document }) => {
                 })
                 .catch((err) => console.error(err))
         }
-    }, [document._id, documentRows])
+    }, [rdocument._id, documentRows])
     useEffect(() => {
         if (
             Array.isArray(documentPrefixesIds) &&
@@ -104,7 +104,7 @@ const Document = ({ document }) => {
         }
     }, [documentPrefixesIds, prefixes])
     const handleAddPrefix = (prefix) => {
-        addPrefixToDocument({ prefix_id: prefix._id, document_id: document._id })
+        addPrefixToDocument({ prefix_id: prefix._id, document_id: rdocument._id })
             .then((data) => {
                 setDocumentPrefixes((prev) => [...prev, { ...prefix, idOnDoc: data.data._id }])
                 setPrefixes((prev) => prev.filter((e) => e !== prefix))
@@ -126,7 +126,7 @@ const Document = ({ document }) => {
                 first_column: firstColumn._id,
                 second_column: secondColumn._id,
                 third_column: thirdColumn._id,
-                document_id: document._id,
+                document_id: rdocument._id,
             })
                 .then((data) =>
                     setDocumentRows([
@@ -149,7 +149,7 @@ const Document = ({ document }) => {
                 first_column: selectedDocumentRows[0]._id,
                 second_column: selectedDocumentRows[1]._id,
                 third_column: selectedDocumentRows[2]._id,
-                document_id: document._id,
+                document_id: rdocument._id,
             })
                 .then((data) => {
                     const first = documentRows.find((row) => row._id === data.data.row_data.first_column)
@@ -194,15 +194,47 @@ const Document = ({ document }) => {
     const handleUnselectDocRow = (selectedDocumentRow) => {
         setSelectedDocumentRows(selectedDocumentRows.map((docRow) => (docRow === selectedDocumentRow ? null : docRow)))
     }
+    const handleGenerate = () => {
+        let text = ""
+        documentPrefixes.forEach((prefix) => {
+            text = `${text}@prefix ${prefix.name} <${prefix.url}> .\n`
+        })
+        text = `${text}\n`
+        documentRows.forEach((docRow) => {
+            text = `${text}${docRow.rNode[0].rprefix_id.name}${docRow.rNode[0].name} ${docRow.rLabel[0].rprefix_id.name}${docRow.rLabel[0].name} "${docRow.item[0].name}" .\n`
+        })
+        text = `${text}\n`
+        documentTriplets.forEach((triplet) => {
+            text = `${text}${triplet.row_data.first_column.rNode[0].rprefix_id.name}${triplet.row_data.first_column.rNode[0].name} ${triplet.row_data.second_column.rNode[0].rprefix_id.name}${triplet.row_data.second_column.rNode[0].name} ${triplet.row_data.third_column.rNode[0].rprefix_id.name}${triplet.row_data.third_column.rNode[0].name} .\n`
+        })
+        const element = document.createElement("a")
+        element.style.display = "none"
+        element.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`)
+        element.setAttribute("download", `${rdocument.name}.txt`)
+        document.body.appendChild(element)
+        element.click()
+        document.body.removeChild(element)
+    }
 
     return (
         <div>
-            {document?.name && <div className={styles.documentName}>{document.name}</div>}
+            {rdocument?.name && <div className={styles.documentName}>{rdocument.name}</div>}
             <Prefix
                 prefixes={prefixes}
                 onAddPrefix={handleAddPrefix}
                 documentPrefixes={documentPrefixes}
                 onRemovePrefix={handleRemovePrefix}
+                onGenerate={handleGenerate}
+                disabledGenerate={
+                    !(
+                        Array.isArray(documentRows) &&
+                        documentRows.length > 0 &&
+                        Array.isArray(documentTriplets) &&
+                        documentTriplets.length > 0 &&
+                        Array.isArray(documentPrefixes) &&
+                        documentPrefixes.length > 0
+                    )
+                }
             />
             <Rows
                 onDeleteDocumentRow={handleDeleteDocumentRow}
