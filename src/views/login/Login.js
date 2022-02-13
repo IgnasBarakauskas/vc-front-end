@@ -3,7 +3,7 @@ import { CustomButton } from "../../common/components"
 import { SignIn, SignUp } from "./components"
 import styles from "./Login.module.css"
 
-const Login = () => {
+const Login = ({ open }) => {
     const [isLoging, setIsLoging] = useState(true)
     const changeMode = () => {
         setIsLoging(!isLoging)
@@ -14,7 +14,7 @@ const Login = () => {
         window.dispatchEvent(new Event("storage"))
     }
     return (
-        <div className={styles.container}>
+        <div data-open={open} className={styles.container}>
             <div className={styles.selector} data-login={isLoging}>
                 <div className={styles.mainText}>
                     {isLoging ? "Are you still not registered?" : "Are you already the part of our team?"}
@@ -30,8 +30,8 @@ const Login = () => {
                     </CustomButton>
                 </div>
             </div>
-            <SignIn onLogin={handleLogin} open={isLoging} />
-            <SignUp onLogin={handleLogin} open={!isLoging} />
+            <SignIn onLogin={handleLogin} fullWidth={isLoging} />
+            <SignUp onLogin={handleLogin} fullWidth={!isLoging} />
         </div>
     )
 }

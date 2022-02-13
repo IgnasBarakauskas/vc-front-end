@@ -1,5 +1,5 @@
-import { DialogActions } from "@mui/material"
 import React from "react"
+import { DialogActions } from "@mui/material"
 import { CustomButton } from "../.."
 import styles from "./CustomDialogFooter.module.css"
 

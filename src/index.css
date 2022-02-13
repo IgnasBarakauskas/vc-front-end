@@ -10,6 +10,8 @@
     --color-dark-red: #d12626;
     --color-grey: #dadada;
     --color-dark-grey: #a6b4b3;
+    --color-empty-background: #c5fbfb;
+    --color-empty-text: #277e9b;
 }
 body {
     margin: 0;
