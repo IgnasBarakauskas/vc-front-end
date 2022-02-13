@@ -60,7 +60,7 @@ const Main = ({ isLogged }) => {
                     <MenuItem onClick={handleLogOut}>Sign out</MenuItem>
                 </DropDown>
                 {Array.isArray(documents) && documents.length > 0 && (
-                    <Document document={documents[selectedDocumentId]} />
+                    <Document rdocument={documents[selectedDocumentId]} />
                 )}
             </div>
         </div>
