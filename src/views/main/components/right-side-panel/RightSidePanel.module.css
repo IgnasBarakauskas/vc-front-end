@@ -1,0 +1,35 @@
+.container {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    padding: 8px 0;
+    height: 100%;
+    background-image: url("../../../../common/images/backGround.jpg");
+    background-size: cover;
+    z-index: 10;
+}
+.container[data-opened="true"] {
+    width: 33%;
+    transition: width 1s;
+}
+.container[data-opened="false"] {
+    width: 48px;
+    transition: width 1s;
+}
+.button {
+    margin-left: 6px !important;
+    padding: 16px !important;
+    width: 32px;
+    min-width: 32px !important;
+}
+.contentContainer {
+    z-index: 100;
+}
+.contentContainer[data-open="false"] {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.contentContainer[data-open="true"] {
+    opacity: 1;
+    transition: opacity 0.5s;
+}
