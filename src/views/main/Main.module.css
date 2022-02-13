@@ -9,10 +9,10 @@
 .subContainer {
     display: inline-block;
     position: absolute;
-    right: 0;
+    right: 48px;
     padding: 16px;
     height: 100%;
-    width: calc(100% - 80px);
+    width: calc(100% - 128px);
     height: calc(100% - 32px);
 }
 .userButton {

@@ -7,6 +7,8 @@ import {
     faTimes,
     faInfoCircle,
     faDownload,
+    faUsers,
+    faLongArrowAltDown,
 } from "@fortawesome/free-solid-svg-icons"
 import { faSquare } from "@fortawesome/free-regular-svg-icons"
 
@@ -20,5 +22,7 @@ const icon = {
     faInfoCircle,
     faSquare,
     faDownload,
+    faUsers,
+    faLongArrowAltDown,
 }
 export default icon
