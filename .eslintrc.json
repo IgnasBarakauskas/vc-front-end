@@ -38,6 +38,7 @@
         ],
         "no-underscore-dangle": "off",
         "no-lonely-if": "off",
+        "no-cyle": "off",
         "no-unused-vars": "error",
         "max-len": [
             "warn",

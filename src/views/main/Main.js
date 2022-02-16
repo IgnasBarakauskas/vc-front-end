@@ -4,7 +4,7 @@ import { CustomButton, DropDown } from "../../common/components"
 import { SidePanel, Document } from "./components"
 import styles from "./Main.module.css"
 import { getUserId } from "../../common/utils/tokenUtils"
-import { getDocuments, createDocument } from "../../services/documentServices"
+import { getDocuments, createDocument, deleteDocument } from "../../services/documentServices"
 
 const Main = ({ isLogged }) => {
     const [userOpen, setUserOpen] = useState(false)
@@ -43,9 +43,20 @@ const Main = ({ isLogged }) => {
                 .catch(() => setFileNameErr("*Server side error ocured"))
         }
     }
+    const handleDeleteDocument = (documentId) => {
+        const userId = getUserId()
+        deleteDocument(documentId, userId)
+            .then(() => setDocuments(documents.filter((document) => document._id !== documentId)))
+            .catch((err) => console.error(err))
+    }
+
     return (
         <div className={styles.container}>
-            <SidePanel documents={documents} onAddNewDocument={handleAddNewDocument} />
+            <SidePanel
+                documents={documents}
+                onAddNewDocument={handleAddNewDocument}
+                onDeleteDocument={handleDeleteDocument}
+            />
             <div className={styles.subContainer}>
                 <CustomButton
                     ref={anchorRef}

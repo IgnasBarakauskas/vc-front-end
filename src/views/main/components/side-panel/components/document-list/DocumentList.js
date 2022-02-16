@@ -1,21 +1,25 @@
 import React from "react"
-import { CustomIconButton, icon } from "../../../../../../common/components"
+import { CustomButton, CustomIconButton, icon } from "../../../../../../common/components"
+import { getUserId } from "../../../../../../common/utils"
 import styles from "./DocumentList.module.css"
-// import { getUserId } from "../../../../../../common/utils"
 
-export default function DocumentList({ documents }) {
-    //  const [delet, setDelet] = useState(true)
-    //  const handleDelet = () => {
-    //      if (user_id === getUserId) setDelet(delet)
-    //  }
+export default function DocumentList({ documents, onDeleteDocument }) {
     return (
         <span>
             {Array.isArray(documents) &&
                 documents.length > 0 &&
                 documents.map((document) => (
-                    <div key={document._id} className={styles.mainDocument} style={{ cursor: "pointer" }}>
-                        <CustomIconButton icon={icon.faMinus} />
-                        {document.name}
+                    <div key={document._id} className={styles.mainDocument}>
+                        <CustomButton className={styles.documentButton} color="transparent">
+                            {document.name}
+                        </CustomButton>
+                        {document.user_id === getUserId() && (
+                            <CustomIconButton
+                                onClick={() => onDeleteDocument(document._id)}
+                                color="danger"
+                                icon={icon.faMinus}
+                            />
+                        )}
                     </div>
                 ))}
         </span>

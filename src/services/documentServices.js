@@ -12,3 +12,6 @@ export function createDocument(document) {
 export function getDocuments(userId) {
     return axios.get(`${documentApi}my-documents/${userId}`, getToken())
 }
+export function deleteDocument(documentid, userId) {
+    return axios.post(`${documentApi}delete-document/${documentid}/${userId}`, {}, getToken())
+}
