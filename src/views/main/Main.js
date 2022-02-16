@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { MenuItem } from "@mui/material"
 import { CustomButton, DropDown } from "../../common/components"
-import { SidePanel, Document } from "./components"
+import { SidePanel, Document, RightSidePanel } from "./components"
 import styles from "./Main.module.css"
 import { getUserId } from "../../common/utils/tokenUtils"
 import { getDocuments, createDocument, deleteDocument } from "../../services/documentServices"
@@ -71,9 +71,10 @@ const Main = ({ isLogged }) => {
                     <MenuItem onClick={handleLogOut}>Sign out</MenuItem>
                 </DropDown>
                 {Array.isArray(documents) && documents.length > 0 && (
-                    <Document document={documents[selectedDocumentId]} />
+                    <Document rdocument={documents[selectedDocumentId]} />
                 )}
             </div>
+            <RightSidePanel />
         </div>
     )
 }
