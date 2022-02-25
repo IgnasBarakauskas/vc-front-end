@@ -4,7 +4,7 @@ import { CustomButton, icon } from "../../../../common/components"
 import Footer from "./Footer"
 import styles from "./RightSidePanel.module.css"
 
-const RightSidePanel = () => {
+const RightSidePanel = ({ rdocument }) => {
     const [open, setOpen] = useState(false)
     const [showContent, setShowContent] = useState(false)
     useEffect(() => {
@@ -26,7 +26,7 @@ const RightSidePanel = () => {
             </CustomButton>
             {open && (
                 <div data-open={showContent} className={styles.contentContainer}>
-                    <Footer open={showContent} />
+                    <Footer open={showContent} rdocument={rdocument} />
                 </div>
             )}
         </div>

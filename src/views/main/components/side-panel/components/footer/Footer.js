@@ -6,6 +6,7 @@ import {
     CustomDialogFooter,
     CustomDialogBody,
     CustomDialogTitle,
+    icon,
 } from "../../../../../../common/components"
 import regex from "../../../../../../common/utils"
 import styles from "./Footer.module.css"
@@ -38,9 +39,21 @@ const Footer = ({ open, onAddNewDocument }) => {
     return (
         <span>
             <div data-open={open} className={styles.container}>
-                <CustomButton size="lg" onClick={handleOpenDialog}>
-                    Add a new document
-                </CustomButton>
+                <div className={styles.buttonContainer}>
+                    <CustomButton
+                        className={styles.button}
+                        icon={icon.faQuoteRight}
+                        size="lg"
+                        onClick={handleOpenDialog}
+                    >
+                        Create Node
+                    </CustomButton>
+                </div>
+                <div className={styles.buttonContainer}>
+                    <CustomButton className={styles.button} icon={icon.faFileCode} size="lg" onClick={handleOpenDialog}>
+                        Create Document
+                    </CustomButton>
+                </div>
             </div>
             <CustomDialog open={openDialog} onClose={handleCloseDialog}>
                 <CustomDialogTitle onClose={handleCloseDialog}>Create a new document</CustomDialogTitle>

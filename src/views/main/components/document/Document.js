@@ -53,13 +53,14 @@ const Document = ({ rdocument }) => {
                     setDocumentPrefixesIds(data.data.rdocumentPrefixes)
                 })
                 .catch((err) => console.error(err))
+                .finally(() => setLoadingDocTriplets(false))
             setDocumentRows([])
             getAllDocumentConcepts(rdocument._id)
                 .then((data) => {
                     setDocumentRows(data.data.rdocumentRows)
-                    setLoadingloadingDocRows(false)
                 })
                 .catch((err) => console.error(err))
+                .finally(() => setLoadingloadingDocRows(false))
         }
     }, [rdocument._id])
 
