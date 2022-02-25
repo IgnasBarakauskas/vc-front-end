@@ -4,16 +4,22 @@ import { CustomButton, CustomIconButton, icon } from "../../../../../../common/c
 import { getUserId } from "../../../../../../common/utils"
 import styles from "./DocumentList.module.css"
 
-export default function DocumentList({ documents, onDeleteDocument }) {
+export default function DocumentList({ documents, onDeleteDocument, selectedDocumentIndex }) {
     return (
-        <span>
+        <div className={styles.documentList}>
             {Array.isArray(documents) &&
                 documents.length > 0 &&
-                documents.map((document) => (
-                    <div key={document._id} className={styles.mainDocument}>
-                        <CustomButton className={styles.documentButton} color="transparent">
+                documents.map((document, index) => (
+                    <div key={document._id} className={styles.documentRow}>
+                        {console.log(selectedDocumentIndex === index)}
+                        <CustomButton
+                            style={{ textAlign: "left" }}
+                            className={styles.documentButton}
+                            disabled={index === selectedDocumentIndex}
+                            color="transparent"
+                        >
                             <Tooltip title={document.name}>
-                                <span className={styles.test}>{document.name}</span>
+                                <span className={styles.documentButton__name}>{document.name}</span>
                             </Tooltip>
                         </CustomButton>
                         {document.user_id === getUserId() && (
@@ -25,6 +31,6 @@ export default function DocumentList({ documents, onDeleteDocument }) {
                         )}
                     </div>
                 ))}
-        </span>
+        </div>
     )
 }

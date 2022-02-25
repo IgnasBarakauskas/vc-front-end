@@ -5,7 +5,7 @@ import styles from "./SidePanel.module.css"
 import Footer from "./components/footer/Footer"
 import DocumentList from "./components/document-list/DocumentList"
 
-const SidePanel = ({ documents, onAddNewDocument, onDeleteDocument }) => {
+const SidePanel = ({ documents, onAddNewDocument, onDeleteDocument, selectedDocumentIndex }) => {
     const [open, setOpen] = useState(false)
     const [showContent, setShowContent] = useState(false)
     useEffect(() => {
@@ -27,7 +27,11 @@ const SidePanel = ({ documents, onAddNewDocument, onDeleteDocument }) => {
             </CustomButton>
             {open && (
                 <div data-open={showContent} className={styles.contentContainer}>
-                    <DocumentList documents={documents} onDeleteDocument={onDeleteDocument} />
+                    <DocumentList
+                        selectedDocumentIndex={selectedDocumentIndex}
+                        documents={documents}
+                        onDeleteDocument={onDeleteDocument}
+                    />
                     <Footer onAddNewDocument={onAddNewDocument} open={showContent} />
                 </div>
             )}

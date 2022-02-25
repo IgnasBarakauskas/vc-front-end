@@ -1,4 +1,9 @@
-.mainDocument {
+.documentList {
+    margin-top: 50px;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+.documentRow {
     max-width: 100%;
     margin-top: 10px;
     padding: 0 5px;
@@ -7,7 +12,6 @@
     overflow-y: auto;
     overflow-x: hidden;
     text-align: center;
-    overflow-wrap: anywhere;
     padding-bottom: 2px;
     display: flex;
     justify-content: center;
@@ -16,10 +20,12 @@
 .documentButton {
     font-size: 20px !important;
 }
-.test {
-    display: inline-block;
+.documentButton:disabled {
+    background-color: transparent !important;
+}
+.documentButton__name {
     display: block;
-    width: 150px;
+    width: 260px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

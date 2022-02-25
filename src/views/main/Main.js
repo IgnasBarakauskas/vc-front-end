@@ -9,14 +9,14 @@ import { getDocuments, createDocument, deleteDocument } from "../../services/doc
 const Main = ({ isLogged }) => {
     const [userOpen, setUserOpen] = useState(false)
     const [documents, setDocuments] = useState(null)
-    const [selectedDocumentId] = useState(0)
+    const [selectedDocumentIndex] = useState(0)
     const anchorRef = useRef(null)
     useEffect(() => {
         const userId = getUserId()
         getDocuments(userId)
             .then((data) => setDocuments(data.data.rdocuments))
             .catch((err) => console.error(err))
-    }, [selectedDocumentId, isLogged])
+    }, [selectedDocumentIndex, isLogged])
     const handleLogOut = () => {
         window.sessionStorage.clear()
         window.dispatchEvent(new Event("storage"))
@@ -56,6 +56,7 @@ const Main = ({ isLogged }) => {
                 documents={documents}
                 onAddNewDocument={handleAddNewDocument}
                 onDeleteDocument={handleDeleteDocument}
+                selectedDocumentIndex={selectedDocumentIndex}
             />
             <div className={styles.subContainer}>
                 <CustomButton
@@ -71,7 +72,7 @@ const Main = ({ isLogged }) => {
                     <MenuItem onClick={handleLogOut}>Sign out</MenuItem>
                 </DropDown>
                 {Array.isArray(documents) && documents.length > 0 && (
-                    <Document rdocument={documents[selectedDocumentId]} />
+                    <Document rdocument={documents[selectedDocumentIndex]} />
                 )}
             </div>
             <RightSidePanel />
