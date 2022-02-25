@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material"
 import React from "react"
 import { CustomButton, CustomIconButton, icon } from "../../../../../../common/components"
 import { getUserId } from "../../../../../../common/utils"
@@ -11,7 +12,9 @@ export default function DocumentList({ documents, onDeleteDocument }) {
                 documents.map((document) => (
                     <div key={document._id} className={styles.mainDocument}>
                         <CustomButton className={styles.documentButton} color="transparent">
-                            {document.name}
+                            <Tooltip title={document.name}>
+                                <span className={styles.test}>{document.name}</span>
+                            </Tooltip>
                         </CustomButton>
                         {document.user_id === getUserId() && (
                             <CustomIconButton

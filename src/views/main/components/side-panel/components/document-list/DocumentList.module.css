@@ -7,10 +7,20 @@
     overflow-y: auto;
     overflow-x: hidden;
     text-align: center;
+    overflow-wrap: anywhere;
     padding-bottom: 2px;
-    display: inline-table;
+    display: flex;
+    justify-content: center;
     color: var(--color-white);
 }
 .documentButton {
     font-size: 20px !important;
+}
+.test {
+    display: inline-block;
+    display: block;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
