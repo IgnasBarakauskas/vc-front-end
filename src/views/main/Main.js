@@ -4,19 +4,20 @@ import { CustomButton, DropDown } from "../../common/components"
 import { SidePanel, Document, RightSidePanel } from "./components"
 import styles from "./Main.module.css"
 import { getUserId } from "../../common/utils/tokenUtils"
-import { getDocuments, createDocument } from "../../services/documentServices"
+import { getDocuments, createDocument, deleteDocument } from "../../services/documentServices"
 
 const Main = ({ isLogged }) => {
     const [userOpen, setUserOpen] = useState(false)
     const [documents, setDocuments] = useState(null)
-    const [selectedDocumentId] = useState(0)
+    const [selectedDocumentIndex, setSelectedDocumentIndex] = useState(0)
     const anchorRef = useRef(null)
+
     useEffect(() => {
         const userId = getUserId()
         getDocuments(userId)
             .then((data) => setDocuments(data.data.rdocuments))
             .catch((err) => console.error(err))
-    }, [selectedDocumentId, isLogged])
+    }, [selectedDocumentIndex, isLogged])
     const handleLogOut = () => {
         window.sessionStorage.clear()
         window.dispatchEvent(new Event("storage"))
@@ -43,9 +44,22 @@ const Main = ({ isLogged }) => {
                 .catch(() => setFileNameErr("*Server side error ocured"))
         }
     }
+    const handleDeleteDocument = (documentId) => {
+        const userId = getUserId()
+        deleteDocument(documentId, userId)
+            .then(() => setDocuments(documents.filter((document) => document._id !== documentId)))
+            .catch((err) => console.error(err))
+    }
+
     return (
         <div className={styles.container}>
-            <SidePanel onAddNewDocument={handleAddNewDocument} />
+            <SidePanel
+                setSelectedDocumentIndex={setSelectedDocumentIndex}
+                documents={documents}
+                onAddNewDocument={handleAddNewDocument}
+                onDeleteDocument={handleDeleteDocument}
+                selectedDocumentIndex={selectedDocumentIndex}
+            />
             <div className={styles.subContainer}>
                 <CustomButton
                     ref={anchorRef}
@@ -60,7 +74,7 @@ const Main = ({ isLogged }) => {
                     <MenuItem onClick={handleLogOut}>Sign out</MenuItem>
                 </DropDown>
                 {Array.isArray(documents) && documents.length > 0 && (
-                    <Document rdocument={documents[selectedDocumentId]} />
+                    <Document rdocument={documents[selectedDocumentIndex]} />
                 )}
             </div>
             <RightSidePanel />

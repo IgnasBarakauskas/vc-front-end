@@ -3,8 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { CustomButton, icon } from "../../../../common/components"
 import styles from "./SidePanel.module.css"
 import Footer from "./components/footer/Footer"
+import DocumentList from "./components/document-list/DocumentList"
 
-const SidePanel = ({ onAddNewDocument }) => {
+const SidePanel = ({
+    documents,
+    onAddNewDocument,
+    onDeleteDocument,
+    selectedDocumentIndex,
+    setSelectedDocumentIndex,
+}) => {
     const [open, setOpen] = useState(false)
     const [showContent, setShowContent] = useState(false)
     useEffect(() => {
@@ -19,6 +26,10 @@ const SidePanel = ({ onAddNewDocument }) => {
     const handleOpen = () => {
         setOpen(!open)
     }
+    const handleSelectDocument = (index) => {
+        setSelectedDocumentIndex(index)
+        handleOpen()
+    }
     return (
         <div data-opened={open} className={styles.container}>
             <CustomButton onClick={handleOpen} color="transparent" className={styles.button}>
@@ -26,6 +37,12 @@ const SidePanel = ({ onAddNewDocument }) => {
             </CustomButton>
             {open && (
                 <div data-open={showContent} className={styles.contentContainer}>
+                    <DocumentList
+                        onSelectDocument={handleSelectDocument}
+                        selectedDocumentIndex={selectedDocumentIndex}
+                        documents={documents}
+                        onDeleteDocument={onDeleteDocument}
+                    />
                     <Footer onAddNewDocument={onAddNewDocument} open={showContent} />
                 </div>
             )}
