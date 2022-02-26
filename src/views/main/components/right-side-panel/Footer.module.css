@@ -20,14 +20,19 @@
 .dialogHalfContainer {
     border: 1px solid var(--color-disabled-background);
     padding: 8px;
+    max-height: 40vh;
+    overflow-y: auto;
     border-radius: 4px;
     width: 45%;
 }
+.searchTextField {
+    width: 260px !important;
+}
 .userButton {
-    margin-top: 4px;
+    display: block !important;
+    margin-top: 4px !important;
     height: fit-content !important;
-    display: block;
-    width: 270px !important;
+    width: 260px !important;
 }
 .userEmail {
     color: var(--color-dark-grey);

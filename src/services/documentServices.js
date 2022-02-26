@@ -3,7 +3,6 @@ import { getUserId } from "../common/utils"
 import config from "./config.json"
 
 const documentApi = `${config.API}documents/`
-const documentUsersApi = `${config.API}documents-users/`
 const getToken = () => {
     return { headers: { Authorization: `Bearer ${window.sessionStorage.getItem("token")}` } }
 }
@@ -16,8 +15,15 @@ export function getDocuments(userId) {
 }
 export function inviteUser(user) {
     return axios.post(
-        `${documentUsersApi}invite`,
+        `${documentApi}document-users/invite`,
         { ...user, user_id: getUserId(), redirect_url: "http://localhost:3000/" },
+        getToken()
+    )
+}
+export function removeUser(documentId, user) {
+    return axios.post(
+        `${documentApi}manual-document-users/${documentId}`,
+        { ...user, user_id: getUserId(), type: "remove" },
         getToken()
     )
 }

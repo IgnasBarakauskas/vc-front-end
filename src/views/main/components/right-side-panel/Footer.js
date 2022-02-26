@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react"
-import { CustomButton, CustomDialog, CustomDialogBody, CustomDialogTitle, icon } from "../../../../common/components"
-import { inviteUser } from "../../../../services/documentServices"
+import {
+    CustomButton,
+    CustomDialog,
+    CustomDialogBody,
+    CustomDialogTitle,
+    CustomTextField,
+    icon,
+} from "../../../../common/components"
+import { getUserId } from "../../../../common/utils"
+import { inviteUser, removeUser } from "../../../../services/documentServices"
 import { getAllUsers } from "../../../../services/userServices"
 import styles from "./Footer.module.css"
 
@@ -8,6 +16,8 @@ const Footer = ({ open, rdocument }) => {
     const [openDialog, setOpenDialog] = useState(false)
     const [docUsers, setDocUsers] = useState([])
     const [otherUsers, setOtherUsers] = useState([])
+    const [search, setSearch] = useState("")
+    const [filteredOtherUsers, setFilteredOtherUsers] = useState([])
     const handleOpenDialog = () => {
         setOpenDialog(true)
     }
@@ -26,6 +36,15 @@ const Footer = ({ open, rdocument }) => {
                 })
                 .catch((err) => console.error(err))
     }, [rdocument.users])
+    useEffect(() => {
+        setFilteredOtherUsers(
+            otherUsers.filter(
+                (user) =>
+                    user.name.toLowerCase().includes(search.toLowerCase()) ||
+                    user.email.toLowerCase().includes(search.toLowerCase())
+            )
+        )
+    }, [otherUsers, search])
     const handleInviteUser = (user) => {
         inviteUser({
             document_id: rdocument._id,
@@ -33,14 +52,27 @@ const Footer = ({ open, rdocument }) => {
             invited_user_email: user.email,
         })
     }
+    const handleRemoveUserFromDocument = (user) => {
+        removeUser(rdocument._id, { invited_user_id: user._id })
+    }
+    const handleChange = (value) => {
+        setSearch(value)
+    }
     return (
         <span>
             <div data-open={open} className={styles.container}>
-                <div className={styles.buttonContainer}>
-                    <CustomButton onClick={handleOpenDialog} className={styles.button} icon={icon.faUsers} size="lg">
-                        Project Users
-                    </CustomButton>
-                </div>
+                {rdocument.user_id === getUserId() && (
+                    <div className={styles.buttonContainer}>
+                        <CustomButton
+                            onClick={handleOpenDialog}
+                            className={styles.button}
+                            icon={icon.faUsers}
+                            size="lg"
+                        >
+                            Project Users
+                        </CustomButton>
+                    </div>
+                )}
                 <div className={styles.buttonContainer}>
                     <CustomButton
                         className={styles.button}
@@ -62,6 +94,7 @@ const Footer = ({ open, rdocument }) => {
                                 docUsers.map((user) => (
                                     <CustomButton
                                         size="fit-content"
+                                        onClick={() => handleRemoveUserFromDocument(user)}
                                         className={styles.userButton}
                                         key={user._id}
                                         variant="outlined"
@@ -72,9 +105,16 @@ const Footer = ({ open, rdocument }) => {
                                 ))}
                         </div>
                         <div className={styles.dialogHalfContainer}>
-                            {Array.isArray(otherUsers) &&
-                                otherUsers.length > 0 &&
-                                otherUsers.map((user) => (
+                            <CustomTextField
+                                onChange={handleChange}
+                                value={search}
+                                disableAutoComplete
+                                className={styles.searchTextField}
+                                placeholder="Emai or name of user"
+                            />
+                            {Array.isArray(filteredOtherUsers) &&
+                                filteredOtherUsers.length > 0 &&
+                                filteredOtherUsers.map((user) => (
                                     <CustomButton
                                         size="fit-content"
                                         className={styles.userButton}
