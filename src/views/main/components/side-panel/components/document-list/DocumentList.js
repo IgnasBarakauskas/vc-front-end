@@ -4,15 +4,15 @@ import { CustomButton, CustomIconButton, icon } from "../../../../../../common/c
 import { getUserId } from "../../../../../../common/utils"
 import styles from "./DocumentList.module.css"
 
-export default function DocumentList({ documents, onDeleteDocument, selectedDocumentIndex }) {
+export default function DocumentList({ documents, onDeleteDocument, selectedDocumentIndex, onSelectDocument }) {
     return (
         <div className={styles.documentList}>
             {Array.isArray(documents) &&
                 documents.length > 0 &&
                 documents.map((document, index) => (
                     <div key={document._id} className={styles.documentRow}>
-                        {console.log(selectedDocumentIndex === index)}
                         <CustomButton
+                            onClick={() => onSelectDocument(index)}
                             style={{ textAlign: "left" }}
                             className={styles.documentButton}
                             disabled={index === selectedDocumentIndex}

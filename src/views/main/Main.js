@@ -9,8 +9,9 @@ import { getDocuments, createDocument, deleteDocument } from "../../services/doc
 const Main = ({ isLogged }) => {
     const [userOpen, setUserOpen] = useState(false)
     const [documents, setDocuments] = useState(null)
-    const [selectedDocumentIndex] = useState(0)
+    const [selectedDocumentIndex, setSelectedDocumentIndex] = useState(0)
     const anchorRef = useRef(null)
+
     useEffect(() => {
         const userId = getUserId()
         getDocuments(userId)
@@ -53,6 +54,7 @@ const Main = ({ isLogged }) => {
     return (
         <div className={styles.container}>
             <SidePanel
+                setSelectedDocumentIndex={setSelectedDocumentIndex}
                 documents={documents}
                 onAddNewDocument={handleAddNewDocument}
                 onDeleteDocument={handleDeleteDocument}
