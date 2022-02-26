@@ -93,7 +93,6 @@ const Document = ({ rdocument }) => {
             documentPrefixesIds.length > 0 &&
             prefixes.length > 0
         ) {
-            setDocumentPrefixes([])
             documentPrefixesIds.forEach((id) => {
                 prefixes.forEach((prefix) => {
                     if (id.rprefix_id === prefix._id) {
