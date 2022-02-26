@@ -4,7 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { CustomButton, DropDown, icon } from "../../../../../../common/components"
 import styles from "./Prefix.module.css"
 
-const Prefix = ({ prefixes = [], onAddPrefix = null, documentPrefixes = [], onRemovePrefix = null }) => {
+const Prefix = ({
+    prefixes = [],
+    onAddPrefix = null,
+    documentPrefixes = [],
+    onRemovePrefix = null,
+    onGenerate,
+    disabledGenerate = true,
+}) => {
     const anchorRef = useRef(null)
     const [open, setOpen] = useState(false)
     const handleOpen = () => {
@@ -56,6 +63,11 @@ const Prefix = ({ prefixes = [], onAddPrefix = null, documentPrefixes = [], onRe
                         ))}
                 </span>
             </DropDown>
+            <div className={styles.generateButton}>
+                <CustomButton disabled={disabledGenerate} onClick={onGenerate} color="secondary" icon={icon.faDownload}>
+                    Generate File
+                </CustomButton>
+            </div>
         </div>
     )
 }

@@ -3,7 +3,7 @@ import React from "react"
 
 const CustomDialog = ({ children, open, onClose }) => {
     return (
-        <Dialog open={open} onClose={onClose}>
+        <Dialog maxWidth="false" open={open} onClose={onClose}>
             {children}
         </Dialog>
     )

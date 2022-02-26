@@ -1,7 +1,17 @@
 .tableContainer {
-    max-height: 78%;
+    max-height: calc(100% - 80px);
     width: 100%;
     overflow: auto;
+}
+.tableContainer__triplets {
+    margin-top: 40px;
+    max-height: calc(100% - 32px);
+    width: 100%;
+    overflow: auto;
+}
+.generationButton {
+    margin-bottom: 8px !important;
+    padding: 6px 16px !important;
 }
 .tableCell {
     background-color: var(--color-light-green);

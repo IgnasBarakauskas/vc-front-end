@@ -36,6 +36,9 @@
 .button[data-size="xl"] {
     height: 48px !important;
 }
+.button[data-size="fit-content"] {
+    height: fit-content !important;
+}
 .button:disabled {
     background-color: var(--color-disabled-background) !important;
     color: var(--color-disabled-text) !important;

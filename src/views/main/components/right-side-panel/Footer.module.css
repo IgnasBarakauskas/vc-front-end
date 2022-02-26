@@ -1,0 +1,40 @@
+.container {
+    position: absolute;
+    width: 100%;
+    bottom: 80px;
+}
+.buttonContainer {
+    padding: 8px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.button {
+    width: 200px !important;
+}
+.dialogContainer {
+    display: flex;
+    width: 600px;
+    justify-content: space-between;
+}
+.dialogHalfContainer {
+    border: 1px solid var(--color-disabled-background);
+    padding: 8px;
+    max-height: 40vh;
+    overflow-y: auto;
+    border-radius: 4px;
+    width: 45%;
+}
+.searchTextField {
+    width: 260px !important;
+}
+.userButton {
+    display: block !important;
+    margin-top: 4px !important;
+    height: fit-content !important;
+    width: 260px !important;
+}
+.userEmail {
+    color: var(--color-dark-grey);
+    font-size: 12px;
+}
