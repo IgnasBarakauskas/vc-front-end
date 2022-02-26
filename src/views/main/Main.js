@@ -78,7 +78,7 @@ const Main = ({ isLogged }) => {
                 )}
             </div>
             {Array.isArray(documents) && documents.length > 0 && (
-                <RightSidePanel rdocument={documents[selectedDocumentId]} />
+                <RightSidePanel rdocument={documents[selectedDocumentIndex]} />
             )}
         </div>
     )
