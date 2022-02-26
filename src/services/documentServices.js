@@ -27,3 +27,6 @@ export function removeUser(documentId, user) {
         getToken()
     )
 }
+export function deleteDocument(documentid, userId) {
+    return axios.post(`${documentApi}delete-document/${documentid}/${userId}`, {}, getToken())
+}

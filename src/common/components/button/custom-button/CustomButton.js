@@ -4,7 +4,10 @@ import { Button } from "@mui/material"
 import styles from "./CustomButton.module.css"
 
 const CustomButton = React.forwardRef(
-    ({ children, className = "", color = "primary", disabled, onClick, variant, size = "md", icon = null }, ref) => {
+    (
+        { children, className = "", color = "primary", style, disabled, onClick, variant, size = "md", icon = null },
+        ref
+    ) => {
         const getIconColor = () => {
             if (disabled) {
                 return "var(--color-disabled-text)"
@@ -22,6 +25,7 @@ const CustomButton = React.forwardRef(
                 ref={ref}
                 className={`${styles.button} ${className}`}
                 onClick={onClick}
+                style={style}
                 disabled={disabled}
                 variant={variant}
                 endIcon={btnIcon}
