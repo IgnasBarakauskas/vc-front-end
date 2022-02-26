@@ -1,9 +1,16 @@
 .container {
     position: absolute;
-    display: flex;
-    justify-content: center;
     width: 100%;
     bottom: 80px;
+}
+.buttonContainer {
+    padding: 8px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.button {
+    width: 200px !important;
 }
 .textField {
     width: 100%;

@@ -53,13 +53,14 @@ const Document = ({ rdocument }) => {
                     setDocumentPrefixesIds(data.data.rdocumentPrefixes)
                 })
                 .catch((err) => console.error(err))
+                .finally(() => setLoadingDocTriplets(false))
             setDocumentRows([])
             getAllDocumentConcepts(rdocument._id)
                 .then((data) => {
                     setDocumentRows(data.data.rdocumentRows)
-                    setLoadingloadingDocRows(false)
                 })
                 .catch((err) => console.error(err))
+                .finally(() => setLoadingloadingDocRows(false))
         }
     }, [rdocument._id])
 
@@ -92,7 +93,6 @@ const Document = ({ rdocument }) => {
             documentPrefixesIds.length > 0 &&
             prefixes.length > 0
         ) {
-            setDocumentPrefixes([])
             documentPrefixesIds.forEach((id) => {
                 prefixes.forEach((prefix) => {
                     if (id.rprefix_id === prefix._id) {

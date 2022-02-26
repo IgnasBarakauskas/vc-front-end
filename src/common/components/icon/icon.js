@@ -9,6 +9,8 @@ import {
     faDownload,
     faUsers,
     faLongArrowAltDown,
+    faFileCode,
+    faQuoteRight,
 } from "@fortawesome/free-solid-svg-icons"
 import { faSquare } from "@fortawesome/free-regular-svg-icons"
 
@@ -24,5 +26,7 @@ const icon = {
     faDownload,
     faUsers,
     faLongArrowAltDown,
+    faFileCode,
+    faQuoteRight,
 }
 export default icon
