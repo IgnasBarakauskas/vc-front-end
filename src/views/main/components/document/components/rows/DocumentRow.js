@@ -226,7 +226,7 @@ const DocumentRow = ({
                             placeholder="value"
                             className={`${styles.input__textfield} ${styles["input__textfield--last"]}`}
                         />
-                        <CustomIconButton onClick={handleCreateDocumentRow} icon={icon.faPlus} />
+                        <CustomIconButton size="lg" onClick={handleCreateDocumentRow} icon={icon.faPlus} />
                     </div>
 
                     <LocalDropDown
