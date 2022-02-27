@@ -52,7 +52,7 @@ const DocumentTriplet = ({ documentTriplets, loadingDocTriplets, onDeleteDocumen
                                         padding="none"
                                     >
                                         <CustomIconButton
-                                            color="danger"
+                                            color="var(--color-red)"
                                             icon={icon.faMinus}
                                             onClick={() => onDeleteDocumentTriplet(documentTriplet._id)}
                                         />

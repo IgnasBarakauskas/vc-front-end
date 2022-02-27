@@ -33,3 +33,34 @@
     opacity: 1;
     transition: opacity 0.5s;
 }
+.commentsCreationContainer {
+    padding-top: 8px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.commentsContainer {
+    display: block;
+    height: 60vh;
+    overflow: auto;
+    width: 100%;
+}
+.commentContainer {
+    background-color: var(--color-light-green);
+    width: 400px;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 8px auto;
+}
+.commentHelperTextContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+.commentHelperText {
+    color: var(--color-dark-grey);
+    font-size: 12px;
+}
+.commentTextField {
+    width: 300px;
+}

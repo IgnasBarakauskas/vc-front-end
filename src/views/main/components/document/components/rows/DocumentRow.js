@@ -226,7 +226,12 @@ const DocumentRow = ({
                             placeholder="value"
                             className={`${styles.input__textfield} ${styles["input__textfield--last"]}`}
                         />
-                        <CustomIconButton size="lg" onClick={handleCreateDocumentRow} icon={icon.faPlus} />
+                        <CustomIconButton
+                            size="lg"
+                            color="var(--color-secondary)"
+                            onClick={handleCreateDocumentRow}
+                            icon={icon.faPlus}
+                        />
                     </div>
 
                     <LocalDropDown

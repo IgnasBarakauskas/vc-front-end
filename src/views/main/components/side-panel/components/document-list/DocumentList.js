@@ -25,7 +25,7 @@ export default function DocumentList({ documents, onDeleteDocument, selectedDocu
                         {document.user_id === getUserId() && (
                             <CustomIconButton
                                 onClick={() => onDeleteDocument(document._id)}
-                                color="danger"
+                                color="var(--color-red)"
                                 icon={icon.faMinus}
                             />
                         )}
