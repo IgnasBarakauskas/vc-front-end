@@ -64,7 +64,7 @@ const RightSidePanel = ({ rdocument }) => {
         }
         interval = seconds / 60
         if (interval > 1) {
-            return `${Math.floor(interval)} minutes agi`
+            return `${Math.floor(interval)} minutes ago`
         }
         return `${Math.floor(seconds)} seconds ago`
     }
@@ -96,6 +96,7 @@ const RightSidePanel = ({ rdocument }) => {
                                                         onClick={() => handleDeleteComment(comment)}
                                                         icon={icon.faMinus}
                                                         color="var(--color-red)"
+                                                        size="sm"
                                                     />
                                                 )}
                                             </span>
