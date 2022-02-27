@@ -11,6 +11,7 @@ const SidePanel = ({
     onDeleteDocument,
     selectedDocumentIndex,
     setSelectedDocumentIndex,
+    onAddNewPrefix,
 }) => {
     const [open, setOpen] = useState(false)
     const [showContent, setShowContent] = useState(false)
@@ -43,7 +44,7 @@ const SidePanel = ({
                         documents={documents}
                         onDeleteDocument={onDeleteDocument}
                     />
-                    <Footer onAddNewDocument={onAddNewDocument} open={showContent} />
+                    <Footer onAddNewDocument={onAddNewDocument} open={showContent} onAddNewPrefix={onAddNewPrefix} />
                 </div>
             )}
         </div>

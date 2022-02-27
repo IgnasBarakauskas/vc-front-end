@@ -9,18 +9,12 @@ import {
 import { getAllItems } from "../../../../services/itemServices"
 import { getAllLabels } from "../../../../services/labelServises"
 import { getAllNodes } from "../../../../services/nodeServices"
-import {
-    addPrefixToDocument,
-    getAllPrefixes,
-    getDocumentPrefixes,
-    removePrefixFromDocument,
-} from "../../../../services/prefixServices"
+import { addPrefixToDocument, getDocumentPrefixes, removePrefixFromDocument } from "../../../../services/prefixServices"
 import { Rows, Prefix } from "./components"
 import styles from "./Document.module.css"
 
-const Document = ({ rdocument }) => {
+const Document = ({ rdocument, setPrefixes, prefixes }) => {
     const [documentPrefixesIds, setDocumentPrefixesIds] = useState([])
-    const [prefixes, setPrefixes] = useState([])
     const [nodes, setNodes] = useState([])
     const [labels, setLabels] = useState([])
     const [items, setItems] = useState([])
@@ -31,9 +25,6 @@ const Document = ({ rdocument }) => {
     const [loadingDocRows, setLoadingloadingDocRows] = useState(true)
     const [loadingDocTriplets, setLoadingDocTriplets] = useState(true)
     useEffect(() => {
-        getAllPrefixes()
-            .then((data) => setPrefixes(data.data.prefixes))
-            .catch((err) => console.error(err))
         getAllNodes()
             .then((data) => setNodes(data.data.rnodes))
             .catch((err) => console.error(err))
@@ -102,7 +93,7 @@ const Document = ({ rdocument }) => {
                 })
             })
         }
-    }, [documentPrefixesIds, prefixes])
+    }, [documentPrefixesIds, prefixes, setPrefixes])
     const handleAddPrefix = (prefix) => {
         addPrefixToDocument({ prefix_id: prefix._id, document_id: rdocument._id })
             .then((data) => {

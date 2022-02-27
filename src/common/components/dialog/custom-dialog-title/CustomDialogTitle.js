@@ -8,7 +8,7 @@ const CustomDialogTitle = ({ children, onClose }) => {
         <DialogTitle className={styles.dialog__title}>
             <div className={styles.dialogTitle__content}>
                 {children}
-                {onClose && <CustomIconButton onClick={onClose} color="secondary" icon={icon.faTimes} />}
+                {onClose && <CustomIconButton onClick={onClose} color="var(--color-secondary)" icon={icon.faTimes} />}
             </div>
         </DialogTitle>
     )
