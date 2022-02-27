@@ -19,3 +19,6 @@ export function addPrefixToDocument(prefix) {
 export function removePrefixFromDocument(prefixId) {
     return axios.post(`${documentPrefixesAPI}delete-document-prefix/${prefixId}`, {}, getToken())
 }
+export function createPrefix(prefix) {
+    return axios.post(`${prefixesAPI}rprefix`, prefix, getToken())
+}

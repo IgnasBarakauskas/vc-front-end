@@ -71,7 +71,7 @@ const DocumentRows = ({
                                         padding="none"
                                     >
                                         <CustomIconButton
-                                            color="danger"
+                                            color="var(--color-red)"
                                             icon={icon.faMinus}
                                             onClick={() => onDeleteDocumentRow(documentRow._id)}
                                         />
