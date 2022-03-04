@@ -10,6 +10,7 @@ const DocumentRows = ({
     selectedDocumentRows,
     onUnselectDocRow,
     onCreateDocumentTriplet,
+    onSelectRow,
 }) => {
     const isSelected = (documentRow) => selectedDocumentRows.indexOf(documentRow)
 
@@ -70,6 +71,11 @@ const DocumentRows = ({
                                         }`}
                                         padding="none"
                                     >
+                                        <CustomIconButton
+                                            icon={icon.faCommentDots}
+                                            color="var(--color-secondary)"
+                                            onClick={() => onSelectRow(documentRow._id)}
+                                        />
                                         <CustomIconButton
                                             color="var(--color-red)"
                                             icon={icon.faMinus}

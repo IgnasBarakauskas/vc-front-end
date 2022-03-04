@@ -20,6 +20,7 @@ const DocumentRow = ({
     onUnselectDocRow,
     loadingDocRows,
     onCreateDocumentTriplet,
+    onSelectRow,
 }) => {
     const [documentNodePrefix, setDocumentNodePrefix] = useState(null)
     const [documentLabelPrefix, setDocumentLabelPrefix] = useState(null)
@@ -168,6 +169,7 @@ const DocumentRow = ({
                     onSelectDocumentRow={onSelectDocumentRow}
                     selectedDocumentRows={selectedDocumentRows}
                     onUnselectDocRow={onUnselectDocRow}
+                    onSelectRow={onSelectRow}
                     onCreateDocumentTriplet={onCreateDocumentTriplet}
                 />
             )) || <EmptyState isLoading={loadingDocRows}>There are no document rows</EmptyState>}

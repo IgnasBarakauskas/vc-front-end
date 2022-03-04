@@ -4,7 +4,7 @@ import { CustomIconButton, EmptyState, icon } from "../../../../../../common/com
 import stylesRows from "./Rows.module.css"
 import styles from "./DocumentRows.module.css"
 
-const DocumentTriplet = ({ documentTriplets, loadingDocTriplets, onDeleteDocumentTriplet }) => {
+const DocumentTriplet = ({ documentTriplets, loadingDocTriplets, onDeleteDocumentTriplet, onSelectRow }) => {
     return (
         <div className={stylesRows.subContainer}>
             {((!Array.isArray(documentTriplets) || documentTriplets.length === 0 || loadingDocTriplets) && (
@@ -51,6 +51,11 @@ const DocumentTriplet = ({ documentTriplets, loadingDocTriplets, onDeleteDocumen
                                         }`}
                                         padding="none"
                                     >
+                                        <CustomIconButton
+                                            icon={icon.faCommentDots}
+                                            color="var(--color-secondary)"
+                                            onClick={() => onSelectRow(documentTriplet._id)}
+                                        />
                                         <CustomIconButton
                                             color="var(--color-red)"
                                             icon={icon.faMinus}

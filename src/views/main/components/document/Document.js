@@ -13,7 +13,7 @@ import { addPrefixToDocument, getDocumentPrefixes, removePrefixFromDocument } fr
 import { Rows, Prefix } from "./components"
 import styles from "./Document.module.css"
 
-const Document = ({ rdocument, setPrefixes, prefixes }) => {
+const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
     const [documentPrefixesIds, setDocumentPrefixesIds] = useState([])
     const [nodes, setNodes] = useState([])
     const [labels, setLabels] = useState([])
@@ -231,6 +231,7 @@ const Document = ({ rdocument, setPrefixes, prefixes }) => {
                 onDeleteDocumentRow={handleDeleteDocumentRow}
                 onCreateDocumentRow={handleCreateDocumentRow}
                 items={items}
+                onSelectRow={onSelectRow}
                 documentRows={documentRows}
                 documentPrefixes={documentPrefixes}
                 nodes={nodes}

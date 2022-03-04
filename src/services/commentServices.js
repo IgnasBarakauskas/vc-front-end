@@ -13,6 +13,9 @@ export function createComment(comment) {
 export function deleteComment(commentId) {
     return axios.post(`${commentApi}delete-comment/${commentId}`, {}, getToken())
 }
-export function getComments(documentId) {
-    return axios.get(`${commentApi}all-document-comments/${documentId}`, getToken())
+export function getComments(rowId) {
+    return axios.get(`${commentApi}all-document-comments/${rowId}`, getToken())
+}
+export function getRowComments(rowId) {
+    return axios.get(`${commentApi}all-document-row-comments/${rowId}`, getToken())
 }

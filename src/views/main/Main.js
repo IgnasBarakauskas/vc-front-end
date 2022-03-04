@@ -10,6 +10,8 @@ import { createPrefix, getAllPrefixes } from "../../services/prefixServices"
 const Main = ({ isLogged }) => {
     const [userOpen, setUserOpen] = useState(false)
     const [documents, setDocuments] = useState(null)
+    const [selectedRowId, setSelectedRowId] = useState("")
+    const [open, setOpen] = useState(false)
     const [prefixes, setPrefixes] = useState([])
     const [selectedDocumentIndex, setSelectedDocumentIndex] = useState(0)
     const anchorRef = useRef(null)
@@ -30,11 +32,27 @@ const Main = ({ isLogged }) => {
         window.sessionStorage.clear()
         window.dispatchEvent(new Event("storage"))
     }
+    const handleOpen = () => {
+        setOpen(true)
+    }
+    const handleClose = () => {
+        setSelectedRowId("")
+        setOpen(false)
+    }
     const handleUserClose = () => {
         setUserOpen(false)
     }
     const handleUserOpen = () => {
-        setUserOpen(!userOpen)
+        setOpen(!open)
+    }
+    const handleSelectRow = (rowId) => {
+        if (!open) {
+            setSelectedRowId(rowId)
+            setOpen(true)
+        } else {
+            setSelectedRowId("")
+            setOpen(false)
+        }
     }
     const handleInitial = () => {
         const name = window.sessionStorage.getItem("name")
@@ -98,12 +116,19 @@ const Main = ({ isLogged }) => {
                     <Document
                         prefixes={prefixes}
                         setPrefixes={setPrefixes}
+                        onSelectRow={handleSelectRow}
                         rdocument={documents[selectedDocumentIndex]}
                     />
                 )}
             </div>
             {Array.isArray(documents) && documents.length > 0 && (
-                <RightSidePanel rdocument={documents[selectedDocumentIndex]} />
+                <RightSidePanel
+                    selectedRowId={selectedRowId}
+                    open={open}
+                    onOpen={handleOpen}
+                    onClose={handleClose}
+                    rdocument={documents[selectedDocumentIndex]}
+                />
             )}
         </div>
     )

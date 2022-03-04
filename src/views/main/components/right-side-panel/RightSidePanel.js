@@ -2,12 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { useState, useEffect } from "react"
 import { CustomButton, CustomIconButton, CustomTextField, EmptyState, icon } from "../../../../common/components"
 import { getUserId } from "../../../../common/utils"
-import { createComment, deleteComment, getComments } from "../../../../services/commentServices"
+import { createComment, deleteComment, getComments, getRowComments } from "../../../../services/commentServices"
 import Footer from "./Footer"
 import styles from "./RightSidePanel.module.css"
 
-const RightSidePanel = ({ rdocument }) => {
-    const [open, setOpen] = useState(false)
+const RightSidePanel = ({ rdocument, open, onOpen, selectedRowId, onClose }) => {
     const [showContent, setShowContent] = useState(false)
     const [commentText, setCommentText] = useState("")
     const [comments, setComments] = useState([])
@@ -21,24 +20,36 @@ const RightSidePanel = ({ rdocument }) => {
         }
     }, [open])
     useEffect(() => {
-        getComments(rdocument._id)
-            .then((data) => setComments(data.data.comments))
-            .catch((err) => console.error(err))
-    }, [rdocument._id])
-    const handleOpen = () => {
-        setOpen(!open)
-    }
+        if (selectedRowId) {
+            getRowComments(selectedRowId)
+                .then((data) => setComments(data.data.comments))
+                .catch((err) => console.error(err))
+        } else {
+            getComments(rdocument._id)
+                .then((data) => setComments(data.data.comments))
+                .catch((err) => console.error(err))
+        }
+    }, [selectedRowId, rdocument._id])
     const handleSetComment = (value) => {
         setCommentText(value)
     }
     const handleCreateComment = () => {
         if (commentText.length > 4) {
-            createComment({ rdocument_id: rdocument._id, text: commentText })
-                .then((data) => {
-                    setComments([data.data, ...comments])
-                    setCommentText("")
-                })
-                .catch((err) => console.error(err))
+            if (selectedRowId) {
+                createComment({ rdocument_row_id: selectedRowId, text: commentText })
+                    .then((data) => {
+                        setComments([data.data, ...comments])
+                        setCommentText("")
+                    })
+                    .catch((err) => console.error(err))
+            } else {
+                createComment({ rdocument_id: rdocument._id, text: commentText })
+                    .then((data) => {
+                        setComments([data.data, ...comments])
+                        setCommentText("")
+                    })
+                    .catch((err) => console.error(err))
+            }
         }
     }
 
@@ -76,7 +87,17 @@ const RightSidePanel = ({ rdocument }) => {
 
     return (
         <div data-opened={open} className={styles.container}>
-            <CustomButton onClick={handleOpen} color="transparent" className={styles.button}>
+            <CustomButton
+                onClick={() => {
+                    if (open) {
+                        onClose()
+                    } else {
+                        onOpen()
+                    }
+                }}
+                color="transparent"
+                className={styles.button}
+            >
                 <FontAwesomeIcon size="2x" icon={icon.faUsers} />
             </CustomButton>
             {open && (

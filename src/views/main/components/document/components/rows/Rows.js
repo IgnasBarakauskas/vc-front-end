@@ -15,6 +15,7 @@ const Rows = ({
     selectedDocumentRows,
     onUnselectDocRow,
     loadingDocRows,
+    onSelectRow,
     onCreateDocumentTriplet,
     documentTriplets,
     loadingDocTriplets,
@@ -25,6 +26,7 @@ const Rows = ({
             <DocumentRow
                 onDeleteDocumentRow={onDeleteDocumentRow}
                 nodes={nodes}
+                onSelectRow={onSelectRow}
                 documentPrefixes={documentPrefixes}
                 items={items}
                 documentRows={documentRows}
@@ -38,6 +40,7 @@ const Rows = ({
             />
             <DocumentTriplet
                 onDeleteDocumentTriplet={onDeleteDocumentTriplet}
+                onSelectRow={onSelectRow}
                 documentTriplets={documentTriplets}
                 loadingDocTriplets={loadingDocTriplets}
             />
