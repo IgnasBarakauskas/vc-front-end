@@ -43,7 +43,7 @@ const Main = ({ isLogged }) => {
         setUserOpen(false)
     }
     const handleUserOpen = () => {
-        setOpen(!open)
+        setUserOpen(!open)
     }
     const handleSelectRow = (rowId) => {
         if (!open) {

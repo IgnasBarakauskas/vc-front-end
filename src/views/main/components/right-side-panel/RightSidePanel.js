@@ -34,18 +34,19 @@ const RightSidePanel = ({ rdocument, open, onOpen, selectedRowId, onClose }) => 
         setCommentText(value)
     }
     const handleCreateComment = () => {
-        if (commentText.length > 4) {
+        if (commentText.length > 0) {
+            const newUserId = { _id: getUserId(), name: window.sessionStorage.getItem("name") }
             if (selectedRowId) {
                 createComment({ rdocument_row_id: selectedRowId, text: commentText })
                     .then((data) => {
-                        setComments([data.data, ...comments])
+                        setComments([{ ...data.data, user_id: newUserId }, ...comments])
                         setCommentText("")
                     })
                     .catch((err) => console.error(err))
             } else {
                 createComment({ rdocument_id: rdocument._id, text: commentText })
                     .then((data) => {
-                        setComments([data.data, ...comments])
+                        setComments([{ ...data.data, user_id: newUserId }, ...comments])
                         setCommentText("")
                     })
                     .catch((err) => console.error(err))

@@ -108,7 +108,7 @@ const DocumentRow = ({
         if (!nodeValue?._id && labelValue.name.length > 3 && itemValue.name.length > 1) {
             if (
                 Array.isArray(filteredNodes) &&
-                filteredNodes.length === 1 &&
+                filteredNodes.length >= 1 &&
                 nodeValue.name.toLowerCase() === filteredNodes[0].name.toLowerCase()
             ) {
                 setFirstColum(filteredNodes[0])

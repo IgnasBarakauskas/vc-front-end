@@ -51,9 +51,19 @@ const Footer = ({ open, rdocument }) => {
             invited_user_id: user._id,
             invited_user_email: user.email,
         })
+            .then(() => {
+                setOtherUsers(otherUsers.filter((other) => other !== user))
+                setDocUsers([...docUsers, user])
+            })
+            .catch((err) => console.error(err))
     }
     const handleRemoveUserFromDocument = (user) => {
-        removeUser(rdocument._id, { invited_user_id: user._id })
+        removeUser(rdocument._id, { other_user_id: user._id })
+            .then(() => {
+                setDocUsers(docUsers.filter((other) => other !== user))
+                setOtherUsers([...otherUsers, user])
+            })
+            .catch((err) => console.error(err))
     }
     const handleChange = (value) => {
         setSearch(value)
@@ -94,6 +104,7 @@ const Footer = ({ open, rdocument }) => {
                                 docUsers.map((user) => (
                                     <CustomButton
                                         size="fit-content"
+                                        disabled={getUserId() === user._id}
                                         onClick={() => handleRemoveUserFromDocument(user)}
                                         className={styles.userButton}
                                         key={user._id}

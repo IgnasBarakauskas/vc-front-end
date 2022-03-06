@@ -28,5 +28,5 @@ export function getUserId() {
     } catch (error) {
         tokenValue = null
     }
-    return tokenValue.userId
+    return tokenValue.userId || tokenValue.user_id
 }
