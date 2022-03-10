@@ -106,16 +106,14 @@ const DocumentRow = ({
         setSecondColumn(null)
         setThirdColumn(null)
         if (!nodeValue?._id && labelValue.name.length > 3 && itemValue.name.length > 1) {
-            if (
-                Array.isArray(filteredNodes) &&
-                filteredNodes.length >= 1 &&
-                nodeValue.name.toLowerCase() === filteredNodes[0].name.toLowerCase()
-            ) {
-                setFirstColum(filteredNodes[0])
+            const index = filteredNodes.map((e) => e.name.toLowerCase()).indexOf(nodeValue.name.toLowerCase())
+            if (Array.isArray(filteredNodes) && index > -1) {
+                setFirstColum(filteredNodes[index])
             } else {
                 if (nodeValue.name?.length > 3 && documentNodePrefix._id) {
+                    const prefix = documentNodePrefix
                     createNode({ name: nodeValue.name, prefix_id: documentNodePrefix._id })
-                        .then((data) => setFirstColum(data.data))
+                        .then((data) => setFirstColum({ ...data.data, rprefix_id: prefix }))
                         .catch((err) => console.error(err))
                 }
             }
@@ -124,12 +122,9 @@ const DocumentRow = ({
             setFirstColum(nodeValue)
         }
         if (!labelValue?._id && nodeValue.name.length > 3 && itemValue.name.length > 1) {
-            if (
-                Array.isArray(filteredLabels) &&
-                filteredLabels.length === 1 &&
-                labelValue.name.toLowerCase() === filteredLabels[0].name.toLowerCase()
-            ) {
-                setSecondColumn(filteredLabels[0])
+            const index = filteredLabels.map((e) => e.name.toLowerCase()).indexOf(labelValue.name.toLowerCase())
+            if (Array.isArray(filteredLabels) && index > -1) {
+                setSecondColumn(filteredLabels[index])
             } else {
                 if (labelValue.name?.length > 3 && documentLabelPrefix._id) {
                     createLabel({ name: labelValue.name, prefix_id: documentLabelPrefix._id, label_type: "generic" })
@@ -142,12 +137,9 @@ const DocumentRow = ({
             setSecondColumn(labelValue)
         }
         if (!itemValue?._id && nodeValue.name.length > 3 && labelValue.name.length > 3) {
-            if (
-                Array.isArray(filteredItems) &&
-                filteredItems.length === 1 &&
-                itemValue.name.toLowerCase() === filteredItems[0].name.toLowerCase()
-            ) {
-                setThirdColumn(filteredItems[0])
+            const index = filteredItems.map((e) => e.name.toLowerCase()).indexOf(itemValue.name.toLowerCase())
+            if (Array.isArray(filteredItems) && index > -1) {
+                setThirdColumn(filteredItems[index])
             } else {
                 if (itemValue.name?.length > 1) {
                     createItem({ name: itemValue.name })
