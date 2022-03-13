@@ -16,15 +16,18 @@ const DocumentRows = ({
 
     return (
         <>
-            <CustomButton
-                disabled={selectedDocumentRows.length < 3}
-                className={styles.generationButton}
-                color="secondary"
-                onClick={onCreateDocumentTriplet}
-                icon={icon.faPlus}
-            >
-                Generate triplet
-            </CustomButton>
+            <div>
+                <div className={styles.title}>Document nodes</div>
+                <CustomButton
+                    disabled={selectedDocumentRows.length < 3}
+                    className={styles.generationButton}
+                    color="secondary"
+                    onClick={onCreateDocumentTriplet}
+                    icon={icon.faPlus}
+                >
+                    Generate triplet
+                </CustomButton>
+            </div>
             <div className={styles.tableContainer}>
                 <Table>
                     <TableBody size="small">
@@ -38,19 +41,23 @@ const DocumentRows = ({
                                         }`}
                                         padding="none"
                                     >
-                                        {(selectionId === 0 && (
-                                            <CustomIconButton
-                                                icon={icon.faSquare}
-                                                onClick={() => onSelectDocumentRow(documentRow)}
-                                            />
-                                        )) || (
-                                            <CustomButton
-                                                onClick={() => onUnselectDocRow(documentRow)}
-                                                color="light-secondary"
-                                                className={styles.idButton}
-                                            >
-                                                {selectionId}
-                                            </CustomButton>
+                                        {documentRow.rLabel[0].name !== "altLabel" && (
+                                            <span>
+                                                {(selectionId === 0 && (
+                                                    <CustomIconButton
+                                                        icon={icon.faSquare}
+                                                        onClick={() => onSelectDocumentRow(documentRow)}
+                                                    />
+                                                )) || (
+                                                    <CustomButton
+                                                        onClick={() => onUnselectDocRow(documentRow)}
+                                                        color="light-secondary"
+                                                        className={styles.idButton}
+                                                    >
+                                                        {selectionId}
+                                                    </CustomButton>
+                                                )}
+                                            </span>
                                         )}
                                     </TableCell>
                                     <TableCell

@@ -41,8 +41,12 @@ const Rows = ({
             <DocumentTriplet
                 onDeleteDocumentTriplet={onDeleteDocumentTriplet}
                 onSelectRow={onSelectRow}
+                onSelectDocumentRow={onSelectDocumentRow}
+                selectedDocumentRows={selectedDocumentRows}
+                documentRows={documentRows}
                 documentTriplets={documentTriplets}
                 loadingDocTriplets={loadingDocTriplets}
+                onCreateDocumentTriplet={onCreateDocumentTriplet}
             />
         </div>
     )
