@@ -16,15 +16,18 @@ const DocumentRows = ({
 
     return (
         <>
-            <CustomButton
-                disabled={selectedDocumentRows.length < 3}
-                className={styles.generationButton}
-                color="secondary"
-                onClick={onCreateDocumentTriplet}
-                icon={icon.faPlus}
-            >
-                Generate triplet
-            </CustomButton>
+            <div>
+                <div className={styles.title}>Document nodes</div>
+                <CustomButton
+                    disabled={selectedDocumentRows.length < 3}
+                    className={styles.generationButton}
+                    color="secondary"
+                    onClick={onCreateDocumentTriplet}
+                    icon={icon.faPlus}
+                >
+                    Generate triplet
+                </CustomButton>
+            </div>
             <div className={styles.tableContainer}>
                 <Table>
                     <TableBody size="small">

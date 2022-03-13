@@ -21,9 +21,9 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
     const [documentPrefixes, setDocumentPrefixes] = useState([])
     const [documentRows, setDocumentRows] = useState([])
     const [documentTriplets, setDocumentTriplets] = useState([])
-    const [selectedDocumentRows, setSelectedDocumentRows] = useState([])
-    const [loadingDocRows, setLoadingloadingDocRows] = useState(true)
-    const [loadingDocTriplets, setLoadingDocTriplets] = useState(true)
+    const [selectedDocumentRows, setSelectedDocumentRows] = useState(new Array(3).fill(null))
+    const [loadingDocRows, setLoadingloadingDocRows] = useState(false)
+    const [loadingDocTriplets, setLoadingDocTriplets] = useState(false)
     useEffect(() => {
         getAllNodes()
             .then((data) => setNodes(data.data.rnodes))
@@ -37,14 +37,12 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
     }, [])
     useEffect(() => {
         setLoadingloadingDocRows(true)
-        setLoadingDocTriplets(true)
         if (rdocument._id) {
             getDocumentPrefixes(rdocument._id)
                 .then((data) => {
                     setDocumentPrefixesIds(data.data.rdocumentPrefixes)
                 })
                 .catch((err) => console.error(err))
-                .finally(() => setLoadingDocTriplets(false))
             setDocumentRows([])
             getAllDocumentConcepts(rdocument._id)
                 .then((data) => {
@@ -57,6 +55,7 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
 
     useEffect(() => {
         if (rdocument._id && Array.isArray(documentRows) && documentRows.length > 0) {
+            setLoadingDocTriplets(true)
             getAllDocumentTriplets(rdocument._id)
                 .then((data) => {
                     setDocumentTriplets(
@@ -72,9 +71,9 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
                             }
                         })
                     )
-                    setLoadingDocTriplets(false)
                 })
                 .catch((err) => console.error(err))
+                .finally(() => setLoadingDocTriplets(false))
         }
     }, [rdocument._id, documentRows])
     useEffect(() => {
@@ -166,19 +165,25 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
             )
             .catch((err) => console.error(err))
     }
-    const handleSelectDocumentRow = (selectedDocumentRow) => {
-        const nullId = selectedDocumentRows.indexOf(null)
-        if (
-            Array.isArray(selectedDocumentRows) &&
-            !selectedDocumentRows.includes(selectedDocumentRow) &&
-            (selectedDocumentRows.length < 3 || nullId >= 0)
-        ) {
-            if (nullId >= 0) {
-                const newSelectedDocRows = [...selectedDocumentRows]
-                newSelectedDocRows[nullId] = selectedDocumentRow
-                setSelectedDocumentRows(newSelectedDocRows)
-            } else {
-                setSelectedDocumentRows([...selectedDocumentRows, selectedDocumentRow])
+    const handleSelectDocumentRow = (selectedDocumentRow, index) => {
+        if (index === 0 || index === 1 || index === 2) {
+            const newSelectedDocRows = [...selectedDocumentRows]
+            newSelectedDocRows[index] = selectedDocumentRow
+            setSelectedDocumentRows(newSelectedDocRows)
+        } else {
+            const nullId = selectedDocumentRows.indexOf(null)
+            if (
+                Array.isArray(selectedDocumentRows) &&
+                !selectedDocumentRows.includes(selectedDocumentRow) &&
+                (selectedDocumentRows.length < 3 || nullId >= 0)
+            ) {
+                if (nullId >= 0) {
+                    const newSelectedDocRows = [...selectedDocumentRows]
+                    newSelectedDocRows[nullId] = selectedDocumentRow
+                    setSelectedDocumentRows(newSelectedDocRows)
+                } else {
+                    setSelectedDocumentRows([...selectedDocumentRows, selectedDocumentRow])
+                }
             }
         }
     }
