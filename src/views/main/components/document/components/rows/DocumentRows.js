@@ -41,19 +41,23 @@ const DocumentRows = ({
                                         }`}
                                         padding="none"
                                     >
-                                        {(selectionId === 0 && (
-                                            <CustomIconButton
-                                                icon={icon.faSquare}
-                                                onClick={() => onSelectDocumentRow(documentRow)}
-                                            />
-                                        )) || (
-                                            <CustomButton
-                                                onClick={() => onUnselectDocRow(documentRow)}
-                                                color="light-secondary"
-                                                className={styles.idButton}
-                                            >
-                                                {selectionId}
-                                            </CustomButton>
+                                        {documentRow.rLabel[0].name !== "altLabel" && (
+                                            <span>
+                                                {(selectionId === 0 && (
+                                                    <CustomIconButton
+                                                        icon={icon.faSquare}
+                                                        onClick={() => onSelectDocumentRow(documentRow)}
+                                                    />
+                                                )) || (
+                                                    <CustomButton
+                                                        onClick={() => onUnselectDocRow(documentRow)}
+                                                        color="light-secondary"
+                                                        className={styles.idButton}
+                                                    >
+                                                        {selectionId}
+                                                    </CustomButton>
+                                                )}
+                                            </span>
                                         )}
                                     </TableCell>
                                     <TableCell
