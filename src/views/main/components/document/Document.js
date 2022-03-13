@@ -22,8 +22,9 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
     const [documentRows, setDocumentRows] = useState([])
     const [documentTriplets, setDocumentTriplets] = useState([])
     const [selectedDocumentRows, setSelectedDocumentRows] = useState(new Array(3).fill(null))
-    const [loadingDocRows, setLoadingloadingDocRows] = useState(false)
-    const [loadingDocTriplets, setLoadingDocTriplets] = useState(false)
+    const [loadingDocRows, setLoadingDocRows] = useState(true)
+    const [loadingDocTriplets, setLoadingDocTriplets] = useState(true)
+
     useEffect(() => {
         getAllNodes()
             .then((data) => setNodes(data.data.rnodes))
@@ -36,7 +37,7 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
             .catch((err) => console.error(err))
     }, [])
     useEffect(() => {
-        setLoadingloadingDocRows(true)
+        setLoadingDocRows(true)
         if (rdocument._id) {
             getDocumentPrefixes(rdocument._id)
                 .then((data) => {
@@ -49,7 +50,11 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
                     setDocumentRows(data.data.rdocumentRows)
                 })
                 .catch((err) => console.error(err))
-                .finally(() => setLoadingloadingDocRows(false))
+                .finally(() => {
+                    setLoadingDocRows(false)
+                })
+        } else {
+            setLoadingDocRows(false)
         }
     }, [rdocument._id])
 
@@ -74,6 +79,8 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
                 })
                 .catch((err) => console.error(err))
                 .finally(() => setLoadingDocTriplets(false))
+        } else {
+            setLoadingDocTriplets(false)
         }
     }, [rdocument._id, documentRows])
     useEffect(() => {

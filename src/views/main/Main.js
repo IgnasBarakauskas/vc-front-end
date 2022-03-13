@@ -17,6 +17,26 @@ const Main = ({ isLogged }) => {
     const anchorRef = useRef(null)
 
     useEffect(() => {
+        window.addEventListener("storage", () => {
+            const docId = window.sessionStorage.getItem("docId")
+            if (!docId && Array.isArray(documents) && documents.length > 0) {
+                window.sessionStorage.setItem("docId", documents[selectedDocumentIndex]._id)
+                window.dispatchEvent(new Event("storage"))
+            }
+        })
+        return () => window.dispatchEvent(new Event("storage"))
+    }, [selectedDocumentIndex, documents])
+    useEffect(() => {
+        const docId = window.sessionStorage.getItem("docId")
+        if (docId && Array.isArray(documents) && documents.length > 0) {
+            documents.forEach((document, index) => {
+                if (document._id === docId) {
+                    setSelectedDocumentIndex(index)
+                }
+            })
+        }
+    }, [documents])
+    useEffect(() => {
         getAllPrefixes()
             .then((data) => setPrefixes(data.data.prefixes))
             .catch((err) => console.error(err))
@@ -88,11 +108,16 @@ const Main = ({ isLogged }) => {
                 })
         }
     }
+    const handleSelectDocumentIndex = (index) => {
+        setSelectedDocumentIndex(index)
+        window.sessionStorage.setItem("docId", documents[index]._id)
+        window.dispatchEvent(new Event("storage"))
+    }
 
     return (
         <div className={styles.container}>
             <SidePanel
-                setSelectedDocumentIndex={setSelectedDocumentIndex}
+                setSelectedDocumentIndex={handleSelectDocumentIndex}
                 documents={documents}
                 onAddNewDocument={handleAddNewDocument}
                 onDeleteDocument={handleDeleteDocument}
