@@ -35,7 +35,7 @@ const DocumentTriplet = ({
                 firstNodeText.toLowerCase(),
                 documentRows.map((row) => row.item[0].name.toLowerCase())
             )
-            const sortedItems = items.ratings.filter((item) => item.rating > 0.05)
+            const sortedItems = items.ratings.filter((item) => item.rating > 0.15)
             sortedItems.sort((a, b) => (a.rating < b.rating ? 1 : -1))
             const filteredItems = sortedItems.map((item) => item.target).slice(0, 5)
             const bestMatches = []
@@ -72,7 +72,7 @@ const DocumentTriplet = ({
                 secondNodeText.toLowerCase(),
                 documentRows.map((row) => row.item[0].name.toLowerCase())
             )
-            const sortedItems = items.ratings.filter((item) => item.rating > 0.05)
+            const sortedItems = items.ratings.filter((item) => item.rating > 0.15)
             sortedItems.sort((a, b) => (a.rating < b.rating ? 1 : -1))
             const filteredItems = sortedItems.map((item) => item.target).slice(0, 5)
             const bestMatches = []
@@ -105,7 +105,7 @@ const DocumentTriplet = ({
                 thirdNodeText.toLowerCase(),
                 documentRows.map((row) => row.item[0].name.toLowerCase())
             )
-            const sortedItems = items.ratings.filter((item) => item.rating > 0.05)
+            const sortedItems = items.ratings.filter((item) => item.rating > 0.15)
             sortedItems.sort((a, b) => (a.rating < b.rating ? 1 : -1))
             const filteredItems = sortedItems.map((item) => item.target).slice(0, 5)
             const bestMatches = []
