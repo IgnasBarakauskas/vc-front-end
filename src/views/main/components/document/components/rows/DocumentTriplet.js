@@ -1,5 +1,6 @@
 import { Table, TableBody, TableCell, TableRow } from "@mui/material"
 import React, { useState, useRef, useEffect } from "react"
+import stringSimilarity from "string-similarity"
 import { CustomIconButton, CustomTextField, EmptyState, icon } from "../../../../../../common/components"
 import stylesRows from "./Rows.module.css"
 import styles from "./DocumentRows.module.css"
@@ -29,42 +30,112 @@ const DocumentTriplet = ({
     const thirdAnchorRef = useRef()
 
     useEffect(() => {
-        setFilteredFirstNodes(
-            documentRows
-                .filter(
-                    (row) =>
-                        row.rNode[0].name.toLowerCase().includes(firstNodeText.toLowerCase()) &&
-                        row.rLabel[0].name !== "altLabel"
-                )
-                .slice(0, 5)
-        )
+        if (typeof firstNodeText.toLowerCase() === "string" && Array.isArray(documentRows) && documentRows.length > 0) {
+            const items = stringSimilarity.findBestMatch(
+                firstNodeText.toLowerCase(),
+                documentRows.map((row) => row.item[0].name.toLowerCase())
+            )
+            const sortedItems = items.ratings.filter((item) => item.rating > 0.05)
+            sortedItems.sort((a, b) => (a.rating < b.rating ? 1 : -1))
+            const filteredItems = sortedItems.map((item) => item.target).slice(0, 5)
+            const bestMatches = []
+            filteredItems.forEach((item) => {
+                documentRows.forEach((row) => {
+                    if (
+                        item.toLocaleLowerCase() === row.item[0].name.toLocaleLowerCase() &&
+                        row.item[0].name !== "altLabel"
+                    ) {
+                        bestMatches.push(row)
+                    }
+                })
+            })
+            setFilteredFirstNodes(bestMatches)
+        } else {
+            setFilteredFirstNodes(
+                documentRows
+                    .filter(
+                        (row) =>
+                            row.item[0].name.toLowerCase().includes(firstNodeText.toLowerCase()) &&
+                            row.item[0].name !== "altLabel"
+                    )
+                    .slice(0, 5)
+            )
+        }
     }, [firstNodeText, documentRows])
     useEffect(() => {
-        setFilteredSecondNodes(
-            documentRows
-                .filter(
-                    (row) =>
-                        row.rNode[0].name.toLowerCase().includes(secondNodeText.toLowerCase()) &&
-                        row.rLabel[0].name !== "altLabel"
-                )
-                .slice(0, 5)
-        )
+        if (
+            typeof secondNodeText.toLowerCase() === "string" &&
+            Array.isArray(documentRows) &&
+            documentRows.length > 0
+        ) {
+            const items = stringSimilarity.findBestMatch(
+                secondNodeText.toLowerCase(),
+                documentRows.map((row) => row.item[0].name.toLowerCase())
+            )
+            const sortedItems = items.ratings.filter((item) => item.rating > 0.05)
+            sortedItems.sort((a, b) => (a.rating < b.rating ? 1 : -1))
+            const filteredItems = sortedItems.map((item) => item.target).slice(0, 5)
+            const bestMatches = []
+            filteredItems.forEach((item) => {
+                documentRows.forEach((row) => {
+                    if (
+                        item.toLocaleLowerCase() === row.item[0].name.toLocaleLowerCase() &&
+                        row.item[0].name !== "altLabel"
+                    ) {
+                        bestMatches.push(row)
+                    }
+                })
+            })
+            setFilteredSecondNodes(bestMatches)
+        } else {
+            setFilteredSecondNodes(
+                documentRows
+                    .filter(
+                        (row) =>
+                            row.item[0].name.toLowerCase().includes(secondNodeText.toLowerCase()) &&
+                            row.item[0].name !== "altLabel"
+                    )
+                    .slice(0, 5)
+            )
+        }
     }, [secondNodeText, documentRows])
     useEffect(() => {
-        setFilteredThirdNodes(
-            documentRows
-                .filter(
-                    (row) =>
-                        row.rNode[0].name.toLowerCase().includes(thirdNodeText.toLowerCase()) &&
-                        row.rLabel[0].name !== "altLabel"
-                )
-                .slice(0, 5)
-        )
+        if (typeof thirdNodeText.toLowerCase() === "string" && Array.isArray(documentRows) && documentRows.length > 0) {
+            const items = stringSimilarity.findBestMatch(
+                thirdNodeText.toLowerCase(),
+                documentRows.map((row) => row.item[0].name.toLowerCase())
+            )
+            const sortedItems = items.ratings.filter((item) => item.rating > 0.05)
+            sortedItems.sort((a, b) => (a.rating < b.rating ? 1 : -1))
+            const filteredItems = sortedItems.map((item) => item.target).slice(0, 5)
+            const bestMatches = []
+            filteredItems.forEach((item) => {
+                documentRows.forEach((row) => {
+                    if (
+                        item.toLocaleLowerCase() === row.item[0].name.toLocaleLowerCase() &&
+                        row.item[0].name !== "altLabel"
+                    ) {
+                        bestMatches.push(row)
+                    }
+                })
+            })
+            setFilteredThirdNodes(bestMatches)
+        } else {
+            setFilteredThirdNodes(
+                documentRows
+                    .filter(
+                        (row) =>
+                            row.item[0].name.toLowerCase().includes(thirdNodeText.toLowerCase()) &&
+                            row.item[0].name !== "altLabel"
+                    )
+                    .slice(0, 5)
+            )
+        }
     }, [thirdNodeText, documentRows])
     useEffect(() => {
-        setFirstNodeText(selectedDocumentRows[0]?.rNode[0]?.name || "")
-        setSecondNodeText(selectedDocumentRows[1]?.rNode[0]?.name || "")
-        setThirdNodeText(selectedDocumentRows[2]?.rNode[0]?.name || "")
+        setFirstNodeText(selectedDocumentRows[0]?.item[0]?.name || "")
+        setSecondNodeText(selectedDocumentRows[1]?.item[0]?.name || "")
+        setThirdNodeText(selectedDocumentRows[2]?.item[0]?.name || "")
     }, [selectedDocumentRows])
 
     return (
