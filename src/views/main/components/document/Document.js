@@ -6,9 +6,9 @@ import {
     createDocumentRowTriplet,
     getAllDocumentTriplets,
 } from "../../../../services/documentRowServices"
-import { getAllItems } from "../../../../services/itemServices"
+import { createItem, getAllItems } from "../../../../services/itemServices"
 import { getAllLabels } from "../../../../services/labelServises"
-import { getAllNodes } from "../../../../services/nodeServices"
+import { createNode, getAllNodes } from "../../../../services/nodeServices"
 import { addPrefixToDocument, getDocumentPrefixes, removePrefixFromDocument } from "../../../../services/prefixServices"
 import { Rows, Prefix } from "./components"
 import styles from "./Document.module.css"
@@ -117,7 +117,29 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
             })
             .catch((err) => console.error(err))
     }
-    const handleCreateDocumentRow = (firstColumn, secondColumn, thirdColumn) => {
+    const handleSelectDocumentRow = (selectedDocumentRow, index) => {
+        if (index === 0 || index === 1 || index === 2) {
+            const newSelectedDocRows = [...selectedDocumentRows]
+            newSelectedDocRows[index] = selectedDocumentRow
+            setSelectedDocumentRows(newSelectedDocRows)
+        } else {
+            const nullId = selectedDocumentRows.indexOf(null)
+            if (
+                Array.isArray(selectedDocumentRows) &&
+                !selectedDocumentRows.includes(selectedDocumentRow) &&
+                (selectedDocumentRows.length < 3 || nullId >= 0)
+            ) {
+                if (nullId >= 0) {
+                    const newSelectedDocRows = [...selectedDocumentRows]
+                    newSelectedDocRows[nullId] = selectedDocumentRow
+                    setSelectedDocumentRows(newSelectedDocRows)
+                } else {
+                    setSelectedDocumentRows([...selectedDocumentRows, selectedDocumentRow])
+                }
+            }
+        }
+    }
+    const handleCreateDocumentRow = (firstColumn, secondColumn, thirdColumn, index = null) => {
         if (firstColumn._id && secondColumn._id && thirdColumn._id) {
             createDocumentRowConcept({
                 first_column: firstColumn._id,
@@ -125,12 +147,24 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
                 third_column: thirdColumn._id,
                 document_id: rdocument._id,
             })
-                .then((data) =>
+                .then((data) => {
                     setDocumentRows([
                         { ...data.data, rNode: [firstColumn], rLabel: [secondColumn], item: [thirdColumn] },
                         ...documentRows,
                     ])
-                )
+                    if (index != null) {
+                        handleSelectDocumentRow(
+                            { ...data.data, rNode: [firstColumn], rLabel: [secondColumn], item: [thirdColumn] },
+                            index
+                        )
+                    }
+                    getAllNodes()
+                        .then((data1) => setNodes(data1.data.rnodes))
+                        .catch((err) => console.error(err))
+                    getAllItems()
+                        .then((data1) => setItems(data1.data.items))
+                        .catch((err) => console.error(err))
+                })
                 .catch((err) => console.error(err))
         }
     }
@@ -172,28 +206,6 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
             )
             .catch((err) => console.error(err))
     }
-    const handleSelectDocumentRow = (selectedDocumentRow, index) => {
-        if (index === 0 || index === 1 || index === 2) {
-            const newSelectedDocRows = [...selectedDocumentRows]
-            newSelectedDocRows[index] = selectedDocumentRow
-            setSelectedDocumentRows(newSelectedDocRows)
-        } else {
-            const nullId = selectedDocumentRows.indexOf(null)
-            if (
-                Array.isArray(selectedDocumentRows) &&
-                !selectedDocumentRows.includes(selectedDocumentRow) &&
-                (selectedDocumentRows.length < 3 || nullId >= 0)
-            ) {
-                if (nullId >= 0) {
-                    const newSelectedDocRows = [...selectedDocumentRows]
-                    newSelectedDocRows[nullId] = selectedDocumentRow
-                    setSelectedDocumentRows(newSelectedDocRows)
-                } else {
-                    setSelectedDocumentRows([...selectedDocumentRows, selectedDocumentRow])
-                }
-            }
-        }
-    }
     const handleUnselectDocRow = (selectedDocumentRow) => {
         setSelectedDocumentRows(selectedDocumentRows.map((docRow) => (docRow === selectedDocumentRow ? null : docRow)))
     }
@@ -217,6 +229,41 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
         document.body.appendChild(element)
         element.click()
         document.body.removeChild(element)
+    }
+
+    const handleCreateNode = (node, index) => {
+        let newId = 0
+        nodes.forEach((n) => {
+            const test = n.name.split("node")[1]
+            if (Number(test) > Number(newId)) {
+                newId = test
+            }
+        })
+        const newName = `node${Number(newId) + 1}`
+        createNode({ name: newName, prefix_id: "61f5c185ab0e19b38bd145db" })
+            .then((data) => {
+                const firstColumn = {
+                    ...data.data,
+                    rprefix_id: { _id: "61f5c185ab0e19b38bd145db", name: "qa", url: "http://qanswer.eu/" },
+                }
+                const secondColumn = {
+                    label_type: "generic",
+                    name: "label",
+                    rprefix_id: {
+                        description: "",
+                        name: "rdfs:",
+                        _id: "61f5c0552626836ccbb3bc8a",
+                    },
+                    _id: "61f5cbcc0a01f044ca4d56e5",
+                }
+                createItem({ name: node })
+                    .then((data2) => {
+                        const thirdColumn = data2.data
+                        handleCreateDocumentRow(firstColumn, secondColumn, thirdColumn, index)
+                    })
+                    .catch((err) => console.error(err))
+            })
+            .catch((err) => console.error(err))
     }
 
     return (
@@ -256,6 +303,7 @@ const Document = ({ rdocument, setPrefixes, prefixes, onSelectRow }) => {
                 onDeleteDocumentTriplet={handleDeleteDocumentTriplet}
                 loadingDocTriplets={loadingDocTriplets}
                 loadingDocRows={loadingDocRows}
+                onCreateNode={handleCreateNode}
             />
         </div>
     )

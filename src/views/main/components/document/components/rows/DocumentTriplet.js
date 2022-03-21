@@ -15,6 +15,7 @@ const DocumentTriplet = ({
     selectedDocumentRows,
     onSelectDocumentRow,
     onCreateDocumentTriplet,
+    onCreateNode,
 }) => {
     const [firstNodeText, setFirstNodeText] = useState("")
     const [secondNodeText, setSecondNodeText] = useState("")
@@ -30,12 +31,17 @@ const DocumentTriplet = ({
     const thirdAnchorRef = useRef()
 
     useEffect(() => {
-        if (typeof firstNodeText.toLowerCase() === "string" && Array.isArray(documentRows) && documentRows.length > 0) {
+        if (
+            typeof firstNodeText.toLowerCase() === "string" &&
+            firstNodeText.length > 0 &&
+            Array.isArray(documentRows) &&
+            documentRows.length > 0
+        ) {
             const items = stringSimilarity.findBestMatch(
                 firstNodeText.toLowerCase(),
                 documentRows.map((row) => row.item[0].name.toLowerCase())
             )
-            const sortedItems = items.ratings.filter((item) => item.rating > 0.15)
+            const sortedItems = items.ratings.filter((item) => item.rating > 0.4)
             sortedItems.sort((a, b) => (a.rating < b.rating ? 1 : -1))
             const filteredItems = sortedItems.map((item) => item.target).slice(0, 5)
             const bestMatches = []
@@ -49,7 +55,7 @@ const DocumentTriplet = ({
                     }
                 })
             })
-            setFilteredFirstNodes(bestMatches)
+            setFilteredFirstNodes([...bestMatches, { _id: 1, name: "Add new node" }])
         } else {
             setFilteredFirstNodes(
                 documentRows
@@ -65,6 +71,7 @@ const DocumentTriplet = ({
     useEffect(() => {
         if (
             typeof secondNodeText.toLowerCase() === "string" &&
+            secondNodeText.length > 0 &&
             Array.isArray(documentRows) &&
             documentRows.length > 0
         ) {
@@ -72,7 +79,7 @@ const DocumentTriplet = ({
                 secondNodeText.toLowerCase(),
                 documentRows.map((row) => row.item[0].name.toLowerCase())
             )
-            const sortedItems = items.ratings.filter((item) => item.rating > 0.15)
+            const sortedItems = items.ratings.filter((item) => item.rating > 0.4)
             sortedItems.sort((a, b) => (a.rating < b.rating ? 1 : -1))
             const filteredItems = sortedItems.map((item) => item.target).slice(0, 5)
             const bestMatches = []
@@ -86,7 +93,7 @@ const DocumentTriplet = ({
                     }
                 })
             })
-            setFilteredSecondNodes(bestMatches)
+            setFilteredSecondNodes([...bestMatches, { _id: 1, name: "Add new node" }])
         } else {
             setFilteredSecondNodes(
                 documentRows
@@ -100,12 +107,17 @@ const DocumentTriplet = ({
         }
     }, [secondNodeText, documentRows])
     useEffect(() => {
-        if (typeof thirdNodeText.toLowerCase() === "string" && Array.isArray(documentRows) && documentRows.length > 0) {
+        if (
+            typeof thirdNodeText.toLowerCase() === "string" &&
+            thirdNodeText.length > 0 &&
+            Array.isArray(documentRows) &&
+            documentRows.length > 0
+        ) {
             const items = stringSimilarity.findBestMatch(
                 thirdNodeText.toLowerCase(),
                 documentRows.map((row) => row.item[0].name.toLowerCase())
             )
-            const sortedItems = items.ratings.filter((item) => item.rating > 0.15)
+            const sortedItems = items.ratings.filter((item) => item.rating > 0.4)
             sortedItems.sort((a, b) => (a.rating < b.rating ? 1 : -1))
             const filteredItems = sortedItems.map((item) => item.target).slice(0, 5)
             const bestMatches = []
@@ -119,7 +131,7 @@ const DocumentTriplet = ({
                     }
                 })
             })
-            setFilteredThirdNodes(bestMatches)
+            setFilteredThirdNodes([...bestMatches, { _id: 1, name: "Add new node" }])
         } else {
             setFilteredThirdNodes(
                 documentRows
@@ -258,7 +270,11 @@ const DocumentTriplet = ({
                         ref={firstAnchorRef}
                         open={openFirst}
                         onSelect={(node) => {
-                            onSelectDocumentRow(node, 0)
+                            if (node._id === 1) {
+                                onCreateNode(firstNodeText, 0)
+                            } else {
+                                onSelectDocumentRow(node, 0)
+                            }
                             setOpenFirst(false)
                         }}
                         onClose={() => {
@@ -270,7 +286,11 @@ const DocumentTriplet = ({
                         ref={secondAnchorRef}
                         open={openSecond}
                         onSelect={(node) => {
-                            onSelectDocumentRow(node, 1)
+                            if (node._id === 1) {
+                                onCreateNode(secondNodeText, 1)
+                            } else {
+                                onSelectDocumentRow(node, 1)
+                            }
                             setOpenSecond(false)
                         }}
                         onClose={() => {
@@ -281,7 +301,11 @@ const DocumentTriplet = ({
                     <LocalDropDown
                         ref={thirdAnchorRef}
                         onSelect={(node) => {
-                            onSelectDocumentRow(node, 2)
+                            if (node._id === 1) {
+                                onCreateNode(thirdNodeText, 2)
+                            } else {
+                                onSelectDocumentRow(node, 2)
+                            }
                             setOpenThird(false)
                         }}
                         open={openThird}
