@@ -20,6 +20,7 @@ const Rows = ({
     documentTriplets,
     loadingDocTriplets,
     onDeleteDocumentTriplet,
+    onCreateNode,
 }) => {
     return (
         <div className={styles.container}>
@@ -47,6 +48,7 @@ const Rows = ({
                 documentTriplets={documentTriplets}
                 loadingDocTriplets={loadingDocTriplets}
                 onCreateDocumentTriplet={onCreateDocumentTriplet}
+                onCreateNode={onCreateNode}
             />
         </div>
     )

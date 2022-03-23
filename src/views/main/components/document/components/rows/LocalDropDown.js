@@ -10,7 +10,7 @@ const LocalDropDown = React.forwardRef(({ values, onClose, open, onSelect }, ref
                     values.length > 0 &&
                     values.map((value) => (
                         <MenuItem onClick={() => onSelect(value)} key={value._id}>
-                            {value.name || value.rNode[0].name}
+                            {value.name || value.item[0].name}
                         </MenuItem>
                     ))}
             </span>
