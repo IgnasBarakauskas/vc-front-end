@@ -49,7 +49,7 @@ const DocumentTriplet = ({
                 documentRows.forEach((row) => {
                     if (
                         item.toLocaleLowerCase() === row.item[0].name.toLocaleLowerCase() &&
-                        row.item[0].name !== "altLabel"
+                        row.rLabel[0].name !== "altLabel"
                     ) {
                         bestMatches.push(row)
                     }
@@ -62,7 +62,7 @@ const DocumentTriplet = ({
                     .filter(
                         (row) =>
                             row.item[0].name.toLowerCase().includes(firstNodeText.toLowerCase()) &&
-                            row.item[0].name !== "altLabel"
+                            row.rLabel[0].name !== "altLabel"
                     )
                     .slice(0, 5)
             )
@@ -87,7 +87,7 @@ const DocumentTriplet = ({
                 documentRows.forEach((row) => {
                     if (
                         item.toLocaleLowerCase() === row.item[0].name.toLocaleLowerCase() &&
-                        row.item[0].name !== "altLabel"
+                        row.rLabel[0].name !== "altLabel"
                     ) {
                         bestMatches.push(row)
                     }
@@ -100,7 +100,7 @@ const DocumentTriplet = ({
                     .filter(
                         (row) =>
                             row.item[0].name.toLowerCase().includes(secondNodeText.toLowerCase()) &&
-                            row.item[0].name !== "altLabel"
+                            row.rLabel[0].name !== "altLabel"
                     )
                     .slice(0, 5)
             )
@@ -125,7 +125,7 @@ const DocumentTriplet = ({
                 documentRows.forEach((row) => {
                     if (
                         item.toLocaleLowerCase() === row.item[0].name.toLocaleLowerCase() &&
-                        row.item[0].name !== "altLabel"
+                        row.rLabel[0].name !== "altLabel"
                     ) {
                         bestMatches.push(row)
                     }
@@ -138,7 +138,7 @@ const DocumentTriplet = ({
                     .filter(
                         (row) =>
                             row.item[0].name.toLowerCase().includes(thirdNodeText.toLowerCase()) &&
-                            row.item[0].name !== "altLabel"
+                            row.rLabel[0].name !== "altLabel"
                     )
                     .slice(0, 5)
             )
